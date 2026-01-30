@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="dropbox-token" content="YOUR_DROPBOX_ACCESS_TOKEN">
     <title>Gallery - Rose Flower Shop</title>
     
     <!-- Fonts -->
@@ -105,12 +106,20 @@
                 </p>
 
                 <!-- Filters -->
-                <div class="flex flex-wrap justify-center gap-4 mb-12">
-                    <button class="filter-btn px-6 py-3 rounded-lg font-medium transition bg-rose-600 text-white" data-filter="all" data-i18n="gallery.filterAll">All</button>
-                    <button class="filter-btn px-6 py-3 rounded-lg font-medium transition bg-gray-100 text-gray-700 hover:bg-gray-200" data-filter="weddings" data-i18n="gallery.filterWeddings">Weddings</button>
-                    <button class="filter-btn px-6 py-3 rounded-lg font-medium transition bg-gray-100 text-gray-700 hover:bg-gray-200" data-filter="baptisms" data-i18n="gallery.filterBaptisms">Baptisms</button>
-                    <button class="filter-btn px-6 py-3 rounded-lg font-medium transition bg-gray-100 text-gray-700 hover:bg-gray-200" data-filter="events" data-i18n="gallery.filterEvents">Events</button>
-                    <button class="filter-btn px-6 py-3 rounded-lg font-medium transition bg-gray-100 text-gray-700 hover:bg-gray-200" data-filter="bouquets" data-i18n="gallery.filterBouquets">Bouquets</button>
+                <div class="flex flex-col items-center gap-4 mb-12">
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <button class="filter-btn px-6 py-3 rounded-lg font-medium transition bg-rose-600 text-white" data-filter="all" data-i18n="gallery.filterAll">All</button>
+                        <button class="filter-btn px-6 py-3 rounded-lg font-medium transition bg-gray-100 text-gray-700 hover:bg-gray-200" data-filter="weddings" data-i18n="gallery.filterWeddings">Weddings</button>
+                        <button class="filter-btn px-6 py-3 rounded-lg font-medium transition bg-gray-100 text-gray-700 hover:bg-gray-200" data-filter="baptisms" data-i18n="gallery.filterBaptisms">Baptisms</button>
+                        <button class="filter-btn px-6 py-3 rounded-lg font-medium transition bg-gray-100 text-gray-700 hover:bg-gray-200" data-filter="events" data-i18n="gallery.filterEvents">Events</button>
+                        <button class="filter-btn px-6 py-3 rounded-lg font-medium transition bg-gray-100 text-gray-700 hover:bg-gray-200" data-filter="bouquets" data-i18n="gallery.filterBouquets">Bouquets</button>
+                    </div>
+                    <button id="refresh-gallery" class="inline-flex items-center space-x-2 text-gray-600 hover:text-rose-600 transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                        </svg>
+                        <span class="text-sm font-medium" data-i18n="gallery.refresh">Ανανέωση γκαλερί</span>
+                    </button>
                 </div>
 
                 <!-- Grid -->
@@ -212,14 +221,11 @@
     </footer>
 
     <!-- Scripts -->
-    <!-- Supabase Client for Dynamic Gallery -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/language-toggle.js"></script>
     <script src="js/main.js"></script>
+    <!-- Dropbox Auto-Gallery System -->
+    <script src="js/dropbox-scanner.js"></script>
+    <script src="js/image-processor.js"></script>
     <script src="js/gallery.js"></script>
-    <!-- Dynamic Gallery Loader (loads from Supabase) -->
-    <script src="js/gallery-loader.js"
-            data-supabase-url="YOUR_SUPABASE_URL"
-            data-supabase-key="YOUR_SUPABASE_ANON_KEY"></script>
 </body>
 </html>
