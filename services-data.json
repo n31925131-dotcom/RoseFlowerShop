@@ -121,5 +121,22 @@
     ],
     "example_image": "https://res.cloudinary.com/dopmj1ksm/image/upload/v1771506738/wz7a5mtmm9x2dydrt8c5.png",
     "order": 1
+  },
+  {
+    "id": "srv_1771506814489_115tejhvc",
+    "created_date": "2026-02-19T13:13:34.489Z",
+    "updated_date": "2026-02-19T13:13:34.489Z",
+    "title": "Εποχιακά Μπουκέτα",
+    "category": "Bouquets",
+    "description": "Όμορφα μπουκέτα με εποχιακά λουλούδια για κάθε περίσταση - γενέθλια, επετείους, ευχαριστώ, συγχαρητήρια.\n\n",
+    "pricing_info": "Από €35 - €120",
+    "features": [
+      "Φρέσκα εποχιακά λουλούδια",
+      "Elegant wrapping",
+      "Personal card",
+      "Same-day delivery"
+    ],
+    "example_image": "https://res.cloudinary.com/dopmj1ksm/image/upload/v1771506809/rjyxzkiiqyu2dutqmyu2.jpg",
+    "order": 2
   }
 ]
