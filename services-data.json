@@ -70,5 +70,22 @@
     ],
     "example_image": "https://res.cloudinary.com/dopmj1ksm/image/upload/v1771506110/x3v8znrllj8yh0vhzcb5.jpg",
     "order": 2
+  },
+  {
+    "id": "srv_1771506615267_n0a66jput",
+    "created_date": "2026-02-19T13:10:15.267Z",
+    "updated_date": "2026-02-19T13:10:15.267Z",
+    "title": "Εταιρικές Εκδηλώσεις",
+    "category": "Events",
+    "description": "Επαγγελματικός ανθοστολισμός για εταιρικά events, παρουσιάσεις προϊόντων, και συνέδρια. Δημιουργούμε την κατάλληλη ατμόσφαιρα για την εκδήλωσή σας.\n\n",
+    "pricing_info": "Από €300 - €1500",
+    "features": [
+      "Στολισμός stage",
+      "Centerpieces",
+      "Ανθικές συνθέσεις υποδοχής",
+      "Branding με λουλούδια"
+    ],
+    "example_image": "https://res.cloudinary.com/dopmj1ksm/image/upload/v1771506611/ppv3uoydm8j0yt3kzlpd.jpg",
+    "order": 1
   }
 ]
