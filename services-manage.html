@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Διαχείριση Υπηρεσιών - Rose Flower Shop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { fontFamily: { sans:['Inter','sans-serif'], serif:['Playfair Display','serif'] }, colors: { rose:{ 50:'#fff1f2',100:'#ffe4e6',200:'#fecdd3',600:'#e11d48',700:'#be123c' } } } }
+        }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes slideIn{from{transform:translateX(100%)}to{transform:translateX(0)}}
+        @keyframes modalFadeIn{from{opacity:0}to{opacity:1}}
+        @keyframes modalSlideIn{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
+        .fade-in{animation:fadeIn .5s ease-out forwards}
+        .toast{position:fixed;top:20px;right:20px;z-index:9999;animation:slideIn .3s ease-out}
+        .modal-overlay{animation:modalFadeIn .3s ease-out}
+        .modal-content{animation:modalSlideIn .3s ease-out}
+        .stagger-1{animation-delay:.05s;opacity:0}.stagger-2{animation-delay:.10s;opacity:0}.stagger-3{animation-delay:.15s;opacity:0}
+        .line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans min-h-screen">
+
+<header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+            <a href="index.html" class="flex items-center space-x-2">
+                <span class="text-2xl font-serif font-bold text-rose-600">Rose</span>
+                <span class="text-xl font-light text-gray-600">Flower Shop</span>
+            </a>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="index.html" class="text-gray-700 hover:text-rose-600 transition font-medium">Αρχική</a>
+                <a href="services-public.html" class="text-gray-700 hover:text-rose-600 transition font-medium">Υπηρεσίες</a>
+                <button id="logout-btn" class="bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">Αποσύνδεση</button>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-gray-600 hover:text-rose-600">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+        </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+            <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50">Αρχική</a>
+            <button id="logout-btn-mobile" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-rose-600 hover:bg-gray-50">Αποσύνδεση</button>
+        </div>
+    </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between">
+        <div class="mb-4 md:mb-0">
+            <a href="admin.html" class="inline-flex items-center text-gray-600 hover:text-rose-600 transition mb-4">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2"></i>Πίσω στη Διαχείριση
+            </a>
+            <h1 class="text-4xl font-serif font-bold text-gray-900 mb-2">Διαχείριση Υπηρεσιών</h1>
+            <p class="text-gray-600">Επεξεργαστείτε τις υπηρεσίες που προσφέρετε</p>
+        </div>
+        <button id="new-service-btn" class="bg-rose-600 hover:bg-rose-700 text-white px-6 py-3 rounded-lg font-medium transition flex items-center space-x-2 self-start md:self-auto">
+            <i data-lucide="plus" class="w-5 h-5"></i><span>Νέα Υπηρεσία</span>
+        </button>
+    </div>
+
+    <!-- GitHub Token Banner -->
+    <div id="token-banner" class="mb-6 bg-amber-50 border border-amber-200 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+        <div class="flex-1">
+            <p class="font-semibold text-amber-800">⚙️ Σύνδεση με GitHub</p>
+            <p class="text-sm text-amber-700 mt-1">Εισάγετε το GitHub Personal Access Token σας ώστε οι αλλαγές να είναι ορατές σε όλους.</p>
+        </div>
+        <div class="flex gap-2 flex-shrink-0">
+            <input type="password" id="github-token-input" placeholder="ghp_xxxxxxxxxxxx"
+                class="px-3 py-2 border border-amber-300 rounded-lg text-sm w-52 focus:outline-none focus:ring-2 focus:ring-amber-400">
+            <button id="save-token-btn" class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition">Αποθήκευση</button>
+        </div>
+    </div>
+    <div id="token-ok-banner" class="hidden mb-6 bg-green-50 border border-green-200 rounded-2xl p-4 flex items-center justify-between">
+        <p class="text-green-800 text-sm font-medium">✅ Token αποθηκεύτηκε — οι αλλαγές θα είναι ορατές σε όλους.</p>
+        <button id="change-token-btn" class="text-green-700 underline text-sm ml-4">Αλλαγή</button>
+    </div>
+
+    <div id="loading-spinner" class="hidden flex justify-center items-center py-20">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-rose-600"></div>
+    </div>
+    <div id="empty-state" class="hidden bg-gray-50 rounded-2xl p-12 text-center">
+        <i data-lucide="wrench" class="w-16 h-16 text-gray-400 mx-auto mb-4"></i>
+        <p class="text-gray-600 mb-4">Δεν υπάρχουν υπηρεσίες</p>
+        <button onclick="openCreateDialog()" class="bg-rose-600 hover:bg-rose-700 text-white px-6 py-3 rounded-lg font-medium transition">Δημιουργήστε την πρώτη υπηρεσία</button>
+    </div>
+    <div id="services-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+</main>
+
+<!-- Modal -->
+<div id="modal-overlay" class="hidden fixed inset-0 bg-black/50 z-50 modal-overlay" onclick="closeModal(event)">
+    <div class="flex items-center justify-center min-h-screen px-4 py-8">
+        <div id="modal-content" class="modal-content bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+            <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between sticky top-0 bg-white z-10">
+                <h2 id="modal-title" class="text-2xl font-serif font-bold text-gray-900">Νέα Υπηρεσία</h2>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 transition"><i data-lucide="x" class="w-6 h-6"></i></button>
+            </div>
+            <form id="service-form" class="px-6 py-6 space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Τίτλος *</label>
+                    <input type="text" id="title" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent transition" placeholder="π.χ. Γαμήλιοι Ανθοστολισμοί">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Κατηγορία *</label>
+                    <select id="category" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent transition">
+                        <option value="Weddings">Γάμοι</option>
+                        <option value="Baptisms">Βαπτίσεις</option>
+                        <option value="Events">Εκδηλώσεις</option>
+                        <option value="Bouquets">Μπουκέτα</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Περιγραφή *</label>
+                    <textarea id="description" required rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent transition resize-none" placeholder="Περιγράψτε την υπηρεσία..."></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Πληροφορίες Τιμολόγησης</label>
+                    <input type="text" id="pricing-info" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent transition" placeholder="π.χ. Από €150 - €500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Χαρακτηριστικά (ένα ανά γραμμή)</label>
+                    <textarea id="features" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent transition resize-none" placeholder="Νυφική ανθοδέσμη&#10;Στολισμός εκκλησίας&#10;Διακόσμηση δεξίωσης"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Εικόνα Παραδείγματος</label>
+                    <div id="image-preview" class="hidden mb-4">
+                        <img id="preview-img" src="" alt="Preview" class="w-full h-48 object-cover rounded-lg">
+                    </div>
+                    <label class="inline-flex items-center px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition cursor-pointer">
+                        <i data-lucide="upload" class="w-5 h-5 mr-2"></i>
+                        <span id="image-upload-text">Ανέβασμα Εικόνας</span>
+                        <input type="file" id="image-input" class="hidden" accept="image/*">
+                    </label>
+                    <p class="text-xs text-gray-500 mt-2">Η εικόνα ανεβαίνει στο Cloudinary αυτόματα.</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Σειρά Εμφάνισης</label>
+                    <input type="number" id="order" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent transition" value="0" min="0">
+                </div>
+                <div class="flex justify-end gap-3 pt-4 border-t border-gray-200">
+                    <button type="button" onclick="closeModal()" class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition">Ακύρωση</button>
+                    <button type="submit" class="px-6 py-3 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-medium transition">
+                        <span id="submit-btn-text">Δημιουργία</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script>
+// ── CONFIG ──
+const CLOUDINARY_CLOUD  = 'dopmj1ksm';
+const CLOUDINARY_PRESET = 'flower_shop_preset';
+const GITHUB_OWNER = 'n31925131-dotcom';
+const GITHUB_REPO  = 'RoseFlowerShop';
+const GITHUB_FILE  = 'services-data.json';
+const RAW_URL = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/main/${GITHUB_FILE}`;
+
+// Auth guard
+if (sessionStorage.getItem('admin_auth') !== 'true') window.location.href = 'admin.html';
+
+// ── TOKEN ──
+function getToken() { return sessionStorage.getItem('github_token') || ''; }
+function updateTokenUI() {
+    const has = !!getToken();
+    document.getElementById('token-banner').classList.toggle('hidden', has);
+    document.getElementById('token-ok-banner').classList.toggle('hidden', !has);
+}
+document.getElementById('save-token-btn').addEventListener('click', () => {
+    const val = document.getElementById('github-token-input').value.trim();
+    if (!val) return showToast('Εισάγετε ένα έγκυρο token', 'error');
+    sessionStorage.setItem('github_token', val);
+    updateTokenUI(); showToast('Token αποθηκεύτηκε!', 'success');
+});
+document.getElementById('change-token-btn').addEventListener('click', () => {
+    sessionStorage.removeItem('github_token'); updateTokenUI();
+});
+
+// ── TOAST ──
+function showToast(msg, type='success') {
+    const c = document.getElementById('toast-container');
+    const t = document.createElement('div');
+    t.className = `toast px-6 py-4 rounded-lg shadow-lg text-white ${type==='success'?'bg-green-600':'bg-red-600'}`;
+    t.textContent = msg; c.appendChild(t);
+    setTimeout(() => { t.style.animation='slideIn .3s ease-out reverse'; setTimeout(()=>t.remove(),300); }, 3500);
+}
+
+function generateId() { return 'srv_'+Date.now()+'_'+Math.random().toString(36).substr(2,9); }
+
+// ── GITHUB DATA ──
+async function loadServicesData() {
+    try {
+        const res = await fetch(RAW_URL + '?t=' + Date.now());
+        if (!res.ok) return [];
+        return await res.json();
+    } catch(e) { return []; }
+}
+
+async function saveServicesData(services) {
+    const token = getToken();
+    if (!token) {
+        localStorage.setItem('services', JSON.stringify(services));
+        showToast('Χωρίς token — αποθηκεύτηκε μόνο τοπικά!', 'error');
+        return false;
+    }
+    const apiUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(services, null, 2))));
+    let sha = null;
+    try {
+        const info = await fetch(apiUrl, { headers:{ Authorization:`token ${token}` } });
+        if (info.ok) { sha = (await info.json()).sha; }
+    } catch(e) {}
+    const body = { message:'Update services data', content, ...(sha?{sha}:{}) };
+    const res = await fetch(apiUrl, {
+        method:'PUT',
+        headers:{ Authorization:`token ${token}`, 'Content-Type':'application/json' },
+        body: JSON.stringify(body)
+    });
+    if (!res.ok) { const e=await res.json(); showToast('GitHub σφάλμα: '+(e.message||'unknown'), 'error'); return false; }
+    return true;
+}
+
+// ── STATE ──
+let allServices = [];
+let editingService = null;
+let pendingImageUrl = null; // holds uploaded Cloudinary URL before form save
+
+// ── RENDER ──
+function getCategoryLabel(cat) {
+    return { Weddings:'Γάμοι', Baptisms:'Βαπτίσεις', Events:'Εκδηλώσεις', Bouquets:'Μπουκέτα' }[cat] || cat;
+}
+
+function renderServices() {
+    const grid = document.getElementById('services-grid');
+    const empty = document.getElementById('empty-state');
+    if (allServices.length === 0) { grid.innerHTML=''; empty.classList.remove('hidden'); return; }
+    empty.classList.add('hidden');
+    grid.innerHTML = allServices.map((s, i) => `
+        <div class="bg-white border-2 border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-shadow fade-in stagger-${(i%3)+1}">
+            ${s.example_image ? `<img src="${s.example_image}" alt="${s.title}" class="w-full h-48 object-cover">` : ''}
+            <div class="p-4">
+                <div class="mb-2"><span class="text-xs text-rose-600 font-medium">${getCategoryLabel(s.category)}</span></div>
+                <h3 class="text-xl font-serif font-semibold text-gray-900 mb-2">${s.title}</h3>
+                <p class="text-gray-600 text-sm line-clamp-2 mb-4">${s.description}</p>
+                <div class="flex gap-2">
+                    <button onclick='openEditDialog(${JSON.stringify(s).replace(/'/g,"&#39;")})'
+                        class="flex-1 flex items-center justify-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition">
+                        <i data-lucide="pencil" class="w-4 h-4"></i><span>Επεξεργασία</span>
+                    </button>
+                    <button onclick="deleteService('${s.id}')"
+                        class="flex items-center justify-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium transition">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>`).join('');
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+}
+
+// ── MODAL ──
+function openCreateDialog() {
+    editingService = null; pendingImageUrl = null;
+    document.getElementById('modal-title').textContent = 'Νέα Υπηρεσία';
+    document.getElementById('submit-btn-text').textContent = 'Δημιουργία';
+    document.getElementById('service-form').reset();
+    document.getElementById('image-preview').classList.add('hidden');
+    document.getElementById('image-upload-text').textContent = 'Ανέβασμα Εικόνας';
+    document.getElementById('modal-overlay').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+}
+
+function openEditDialog(service) {
+    editingService = service; pendingImageUrl = service.example_image || null;
+    document.getElementById('modal-title').textContent = 'Επεξεργασία Υπηρεσίας';
+    document.getElementById('submit-btn-text').textContent = 'Ενημέρωση';
+    document.getElementById('title').value = service.title || '';
+    document.getElementById('category').value = service.category || 'Weddings';
+    document.getElementById('description').value = service.description || '';
+    document.getElementById('pricing-info').value = service.pricing_info || '';
+    document.getElementById('features').value = service.features ? service.features.join('\n') : '';
+    document.getElementById('order').value = service.order || 0;
+    if (service.example_image) {
+        document.getElementById('preview-img').src = service.example_image;
+        document.getElementById('image-preview').classList.remove('hidden');
+    } else {
+        document.getElementById('image-preview').classList.add('hidden');
+    }
+    document.getElementById('modal-overlay').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+}
+
+function closeModal(event) {
+    if (event && event.target !== event.currentTarget) return;
+    document.getElementById('modal-overlay').classList.add('hidden');
+    document.body.style.overflow = 'auto';
+    editingService = null;
+}
+window.openCreateDialog = openCreateDialog;
+window.openEditDialog = openEditDialog;
+window.closeModal = closeModal;
+
+// ── IMAGE UPLOAD TO CLOUDINARY ──
+document.getElementById('image-input').addEventListener('change', async function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const uploadText = document.getElementById('image-upload-text');
+    uploadText.textContent = 'Ανέβασμα...';
+    try {
+        const fd = new FormData();
+        fd.append('file', file);
+        fd.append('upload_preset', CLOUDINARY_PRESET);
+        const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`, { method:'POST', body:fd });
+        if (!res.ok) throw new Error('Upload failed');
+        const data = await res.json();
+        pendingImageUrl = data.secure_url;
+        document.getElementById('preview-img').src = pendingImageUrl;
+        document.getElementById('image-preview').classList.remove('hidden');
+        uploadText.textContent = 'Αλλαγή Εικόνας';
+        showToast('Η εικόνα ανέβηκε!', 'success');
+    } catch(err) {
+        showToast('Σφάλμα ανεβάσματος εικόνας', 'error');
+        uploadText.textContent = 'Ανέβασμα Εικόνας';
+    }
+});
+
+// ── FORM SUBMIT ──
+document.getElementById('service-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submit-btn-text');
+    btn.textContent = 'Αποθήκευση...';
+
+    const formData = {
+        title: document.getElementById('title').value,
+        category: document.getElementById('category').value,
+        description: document.getElementById('description').value,
+        pricing_info: document.getElementById('pricing-info').value,
+        features: document.getElementById('features').value.split('\n').filter(f => f.trim()),
+        example_image: pendingImageUrl || '',
+        order: parseInt(document.getElementById('order').value) || 0
+    };
+
+    let updated = [...allServices];
+    if (editingService) {
+        const idx = updated.findIndex(s => s.id === editingService.id);
+        if (idx !== -1) updated[idx] = { ...updated[idx], ...formData, updated_date: new Date().toISOString() };
+    } else {
+        updated.push({ id:generateId(), created_date:new Date().toISOString(), updated_date:new Date().toISOString(), ...formData });
+    }
+
+    const ok = await saveServicesData(updated);
+    if (ok) {
+        allServices = updated;
+        showToast(editingService ? 'Υπηρεσία ενημερώθηκε!' : 'Υπηρεσία δημιουργήθηκε!', 'success');
+        renderServices();
+        closeModal();
+    }
+    btn.textContent = editingService ? 'Ενημέρωση' : 'Δημιουργία';
+});
+
+// ── DELETE ──
+async function deleteService(id) {
+    if (!confirm('Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή την υπηρεσία;')) return;
+    const updated = allServices.filter(s => s.id !== id);
+    const ok = await saveServicesData(updated);
+    if (ok) { allServices = updated; showToast('Υπηρεσία διαγράφηκε!', 'success'); renderServices(); }
+}
+window.deleteService = deleteService;
+
+// ── EVENTS ──
+document.getElementById('new-service-btn').addEventListener('click', openCreateDialog);
+document.getElementById('mobile-menu-button').addEventListener('click', () =>
+    document.getElementById('mobile-menu').classList.toggle('hidden'));
+function handleLogout() { sessionStorage.clear(); window.location.href = 'admin.html'; }
+document.getElementById('logout-btn').addEventListener('click', handleLogout);
+document.getElementById('logout-btn-mobile').addEventListener('click', handleLogout);
+
+// ── INIT ──
+window.addEventListener('DOMContentLoaded', async () => {
+    updateTokenUI();
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+    document.getElementById('loading-spinner').classList.remove('hidden');
+    allServices = await loadServicesData();
+    document.getElementById('loading-spinner').classList.add('hidden');
+    renderServices();
+});
+</script>
+</body>
+</html>
