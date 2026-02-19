@@ -52,5 +52,23 @@
     ],
     "example_image": "https://res.cloudinary.com/dopmj1ksm/image/upload/v1771506071/v3afeo2hfqqx70zaxwtd.jpg",
     "order": 1
+  },
+  {
+    "id": "srv_1771506115137_x5og77dga",
+    "created_date": "2026-02-19T13:01:55.137Z",
+    "updated_date": "2026-02-19T13:01:55.137Z",
+    "title": "Βάπτιση Αγοριού",
+    "category": "Baptisms",
+    "description": "Μοντέρνοι και κλασικοί στολισμοί για βάπτιση αγοριού. Επιλέγουμε λουλούδια και χρώματα που ταιριάζουν στο θέμα σας, δημιουργώντας μια όμορφη ατμόσφαιρα.\n\n",
+    "pricing_info": "Από €150 - €400",
+    "features": [
+      "Στολισμός εκκλησίας",
+      "Λαμπάδα διακοσμημένη",
+      "Κολυμπήθρα",
+      "Στολισμός δεξίωσης",
+      "Μπομπονιέρες"
+    ],
+    "example_image": "https://res.cloudinary.com/dopmj1ksm/image/upload/v1771506110/x3v8znrllj8yh0vhzcb5.jpg",
+    "order": 2
   }
 ]
