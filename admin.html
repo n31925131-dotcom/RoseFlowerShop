@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration - Rose Flower Shop</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        rose: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            600: '#e11d48',
+                            700: '#be123c',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        /* Custom animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        /* Card hover effect */
+        .admin-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .admin-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Password form initial state */
+        #password-form {
+            opacity: 0;
+            animation: fadeIn 0.6s ease-out 0.2s forwards;
+        }
+
+        /* Dashboard initial state */
+        #admin-dashboard {
+            opacity: 0;
+        }
+
+        #admin-dashboard.show {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans min-h-screen">
+
+    <!-- Header/Navbar -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <span class="text-2xl font-serif font-bold text-rose-600">Rose</span>
+                        <span class="text-xl font-light text-gray-600">Flower Shop</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="text-gray-700 hover:text-rose-600 transition font-medium">Αρχική</a>
+                    <a href="about.html" class="text-gray-700 hover:text-rose-600 transition font-medium">Σχετικά</a>
+                    <a href="services-public.html" class="text-gray-700 hover:text-rose-600 transition font-medium">Υπηρεσίες</a>
+                    <a href="gallery-public.html" class="text-gray-700 hover:text-rose-600 transition font-medium">Συλλογή</a>
+                    <a href="contact-public.html" class="text-gray-700 hover:text-rose-600 transition font-medium">Επικοινωνία</a>
+                    
+                    <!-- Logout Button (only shown when authenticated) -->
+                    <button id="logout-btn" class="hidden bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+                        Αποσύνδεση
+                    </button>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="flex items-center md:hidden">
+                    <button id="mobile-menu-button" type="button" class="text-gray-600 hover:text-rose-600 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-gray-50">Αρχική</a>
+                <a href="about.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-gray-50">Σχετικά</a>
+                <a href="services.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-gray-50">Υπηρεσίες</a>
+                <a href="gallery.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-gray-50">Συλλογή</a>
+                <a href="contact.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-gray-50">Επικοινωνία</a>
+                <button id="logout-btn-mobile" class="hidden w-full text-left px-3 py-2 rounded-md text-base font-medium text-rose-600 hover:bg-gray-50">Αποσύνδεση</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        
+        <!-- PASSWORD AUTHENTICATION FORM -->
+        <div id="password-section" class="max-w-md mx-auto">
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden" id="password-form">
+                <div class="bg-gradient-to-r from-rose-500 to-pink-600 px-8 py-6">
+                    <h1 class="text-3xl font-serif font-bold text-white mb-2">Πίνακας Διαχείρισης</h1>
+                    <p class="text-rose-100">Καλώς ήρθατε, Sailor Sailor</p>
+                </div>
+                
+                <div class="px-8 py-8">
+                    <form id="auth-form" class="space-y-6">
+                        <div>
+                            <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+                                Κωδικός Πρόσβασης
+                            </label>
+                            <input 
+                                type="password" 
+                                id="password" 
+                                name="password"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent transition"
+                                placeholder="Εισάγετε τον κωδικό"
+                                required
+                            >
+                        </div>
+                        
+                        <div id="error-message" class="hidden text-red-600 text-sm bg-red-50 border border-red-200 rounded-lg px-4 py-3">
+                            Λάθος κωδικός πρόσβασης. Δοκιμάστε ξανά.
+                        </div>
+
+                        <button 
+                            type="submit" 
+                            class="w-full bg-rose-600 hover:bg-rose-700 text-white px-6 py-3 rounded-lg font-medium transition flex items-center justify-center space-x-2"
+                        >
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                            </svg>
+                            <span>Σύνδεση</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADMIN DASHBOARD (Hidden initially) -->
+        <div id="admin-dashboard" class="hidden">
+            <!-- Welcome Section -->
+            <div class="bg-white rounded-2xl shadow-sm px-8 py-6 mb-8 fade-in">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="text-3xl font-serif font-bold text-gray-900 mb-2">Πίνακας Διαχείρισης</h1>
+                        <p class="text-gray-600">Καλώς ήρθατε, <span id="admin-name" class="font-medium text-rose-600">Demo Admin</span></p>
+                    </div>
+                    <div class="hidden sm:block">
+                        <button id="logout-btn-dashboard" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-lg font-medium transition flex items-center space-x-2">
+                            <i data-lucide="log-out" class="w-5 h-5"></i>
+                            <span>Αποσύνδεση</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Manage Gallery Card -->
+                <a href="gallery-manage.html" class="admin-card bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl p-8 text-white hover:shadow-2xl fade-in delay-100">
+                    <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="image" class="w-8 h-8"></i>
+                    </div>
+                    <h2 class="text-2xl font-serif font-bold mb-3">Διαχείριση Συλλογής</h2>
+                    <p class="text-indigo-100 mb-4 leading-relaxed">
+                        Προσθέστε ή αφαιρέσετε εικόνες από τη συλλογή σας
+                    </p>
+                    <div class="flex items-center space-x-2 text-sm font-medium">
+                        <span>Ανοίξτε</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </div>
+                </a>
+
+                <!-- Manage Services Card -->
+                <a href="services-manage.html" class="admin-card bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl p-8 text-white hover:shadow-2xl fade-in delay-200">
+                    <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="wrench" class="w-8 h-8"></i>
+                    </div>
+                    <h2 class="text-2xl font-serif font-bold mb-3">Διαχείριση Υπηρεσιών</h2>
+                    <p class="text-pink-100 mb-4 leading-relaxed">
+                        Επεξεργαστείτε τις υπηρεσίες που προσφέρετε
+                    </p>
+                    <div class="flex items-center space-x-2 text-sm font-medium">
+                        <span>Ανοίξτε</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </div>
+                </a>
+
+                <!-- Customer Inquiries Card -->
+                <a href="inquiries-manage.html" class="admin-card bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl p-8 text-white hover:shadow-2xl fade-in delay-300">
+                    <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="message-circle" class="w-8 h-8"></i>
+                    </div>
+                    <h2 class="text-2xl font-serif font-bold mb-3">Αιτήματα Πελατών</h2>
+                    <p class="text-blue-100 mb-4 leading-relaxed">
+                        Δείτε και διαχειριστείτε τα αιτήματα επικοινωνίας
+                    </p>
+                    <div class="flex items-center space-x-2 text-sm font-medium">
+                        <span>Ανοίξτε</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </div>
+                </a>
+
+            </div>
+
+            <!-- Quick Stats — live from GitHub -->
+            <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 fade-in delay-300">
+                <div class="bg-white rounded-xl p-6 shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm mb-1">Σύνολο Εικόνων</p>
+                            <p class="text-3xl font-bold text-gray-900" id="stat-images">—</p>
+                        </div>
+                        <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
+                            <i data-lucide="image" class="w-6 h-6 text-indigo-600"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm mb-1">Υπηρεσίες</p>
+                            <p class="text-3xl font-bold text-gray-900" id="stat-services">—</p>
+                        </div>
+                        <div class="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center">
+                            <i data-lucide="wrench" class="w-6 h-6 text-pink-600"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm mb-1">Αιτήματα Πελατών</p>
+                            <p class="text-3xl font-bold text-gray-900" id="stat-inquiries">—</p>
+                        </div>
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <i data-lucide="message-circle" class="w-6 h-6 text-blue-600"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        // ========================================
+        // AUTHENTICATION SYSTEM
+        // ========================================
+        
+        const CORRECT_PASSWORD = 'rose2026';
+        
+        // Check authentication status on page load
+        function checkAuth() {
+            const isAuthenticated = sessionStorage.getItem('admin_auth');
+            const userDataStr = sessionStorage.getItem('admin_user');
+            
+            if (isAuthenticated === 'true' && userDataStr) {
+                showDashboard(JSON.parse(userDataStr));
+            } else {
+                showPasswordForm();
+            }
+        }
+
+        // Show password form
+        function showPasswordForm() {
+            document.getElementById('password-section').classList.remove('hidden');
+            document.getElementById('admin-dashboard').classList.add('hidden');
+            document.getElementById('admin-dashboard').classList.remove('show');
+            document.getElementById('logout-btn').classList.add('hidden');
+            document.getElementById('logout-btn-mobile').classList.add('hidden');
+        }
+
+        // Show admin dashboard
+        function showDashboard(userData) {
+            document.getElementById('password-section').classList.add('hidden');
+            document.getElementById('admin-dashboard').classList.remove('hidden');
+            
+            // Trigger fade-in animation
+            setTimeout(() => {
+                document.getElementById('admin-dashboard').classList.add('show');
+            }, 10);
+            
+            // Update admin name
+            const adminName = userData.full_name || userData.email || 'Demo Admin';
+            document.getElementById('admin-name').textContent = adminName;
+            
+            // Show logout buttons
+            document.getElementById('logout-btn').classList.remove('hidden');
+            document.getElementById('logout-btn-mobile').classList.remove('hidden');
+            
+            // Initialize Lucide icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+
+        // Handle authentication form submission
+        document.getElementById('auth-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const passwordInput = document.getElementById('password');
+            const errorMessage = document.getElementById('error-message');
+            const password = passwordInput.value;
+            
+            if (password === CORRECT_PASSWORD) {
+                // Create mock user object
+                const mockUser = {
+                    full_name: 'Demo Admin',
+                    email: 'admin@example.com',
+                    role: 'administrator'
+                };
+                
+                // Set authentication flag and user data in sessionStorage
+                sessionStorage.setItem('admin_auth', 'true');
+                sessionStorage.setItem('admin_user', JSON.stringify(mockUser));
+                
+                // Hide error message
+                errorMessage.classList.add('hidden');
+                
+                // Clear password field
+                passwordInput.value = '';
+                
+                // Show dashboard
+                showDashboard(mockUser);
+            } else {
+                // Show error message
+                errorMessage.classList.remove('hidden');
+                
+                // Shake animation for error
+                passwordInput.classList.add('border-red-500');
+                setTimeout(() => {
+                    passwordInput.classList.remove('border-red-500');
+                }, 500);
+            }
+        });
+
+        // Handle logout
+        function handleLogout() {
+            // Clear sessionStorage
+            sessionStorage.removeItem('admin_auth');
+            sessionStorage.removeItem('admin_user');
+            
+            // Reload page to show password form
+            window.location.reload();
+        }
+
+        // Attach logout event listeners
+        document.getElementById('logout-btn').addEventListener('click', handleLogout);
+        document.getElementById('logout-btn-mobile').addEventListener('click', handleLogout);
+        document.getElementById('logout-btn-dashboard').addEventListener('click', handleLogout);
+
+        // ========================================
+        // MOBILE MENU TOGGLE
+        // ========================================
+        
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // ========================================
+        // INITIALIZE ON PAGE LOAD
+        // ========================================
+        
+        // ── LIVE STATS — all three from GitHub JSON files ──
+        const GALLERY_URL    = 'https://raw.githubusercontent.com/n31925131-dotcom/RoseFlowerShop/main/gallery-data.json';
+        const SERVICES_URL   = 'https://raw.githubusercontent.com/n31925131-dotcom/RoseFlowerShop/main/services-data.json';
+        const INQUIRIES_URL  = 'https://raw.githubusercontent.com/n31925131-dotcom/RoseFlowerShop/main/inquiries-data.json';
+
+        async function loadStats() {
+            try {
+                const r = await fetch(GALLERY_URL + '?t=' + Date.now());
+                document.getElementById('stat-images').textContent = r.ok ? (await r.json()).length : '0';
+            } catch(e) { document.getElementById('stat-images').textContent = '0'; }
+
+            try {
+                const r = await fetch(SERVICES_URL + '?t=' + Date.now());
+                document.getElementById('stat-services').textContent = r.ok ? (await r.json()).length : '0';
+            } catch(e) { document.getElementById('stat-services').textContent = '0'; }
+
+            try {
+                const r = await fetch(INQUIRIES_URL + '?t=' + Date.now());
+                document.getElementById('stat-inquiries').textContent = r.ok ? (await r.json()).length : '0';
+            } catch(e) { document.getElementById('stat-inquiries').textContent = '0'; }
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+            if (sessionStorage.getItem('admin_auth') === 'true') loadStats();
+        });
+
+        document.getElementById('auth-form').addEventListener('submit', function() {
+            setTimeout(() => {
+                if (sessionStorage.getItem('admin_auth') === 'true') loadStats();
+            }, 300);
+        });
+    </script>
+</body>
+</html>
