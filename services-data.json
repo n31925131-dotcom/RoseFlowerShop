@@ -16,5 +16,23 @@
     ],
     "example_image": "https://res.cloudinary.com/dopmj1ksm/image/upload/v1771505035/cl42w3mu1iqjdu1vgewb.jpg",
     "order": 1
+  },
+  {
+    "id": "srv_1771505183785_dl8jvhqzd",
+    "created_date": "2026-02-19T12:46:23.785Z",
+    "updated_date": "2026-02-19T12:46:23.785Z",
+    "title": "Διακόσμηση Δεξίωσης Γάμου",
+    "category": "Weddings",
+    "description": "Μεταμορφώνουμε τον χώρο της δεξίωσής σας με εντυπωσιακούς ανθοστολισμούς. Από κεντρικά τραπεζιού μέχρι εντυπωσιακές ανθικές εγκαταστάσεις.\n\n",
+    "pricing_info": "Από €500 - €2000",
+    "features": [
+      "Κεντρικά τραπεζιού",
+      "Ανθικές αψίδες",
+      "Στολισμός εισόδου",
+      "Backdrop φωτογράφησης",
+      "Φωτιστικά με λουλούδια"
+    ],
+    "example_image": "https://res.cloudinary.com/dopmj1ksm/image/upload/v1771505181/orqywxkztwkeyp4lgvcx.jpg",
+    "order": 2
   }
 ]
