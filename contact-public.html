@@ -1,0 +1,662 @@
+<!-- contact-public.html -->
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Επικοινωνήστε μαζί μας - Rose Flower Shop</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        rose: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            600: '#e11d48',
+                            700: '#be123c',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .slide-in-left {
+            animation: slideInLeft 0.6s ease-out 0.2s forwards;
+            opacity: 0;
+        }
+        
+        .slide-in-right {
+            animation: slideInRight 0.6s ease-out 0.4s forwards;
+            opacity: 0;
+        }
+        
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            min-width: 300px;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        .toast.hide {
+            animation: slideIn 0.3s ease-out reverse;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900 font-sans">
+
+    <!-- Navbar -->
+    <header class="bg-white shadow-sm sticky top-0 z-50" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <span class="text-2xl font-serif font-bold text-rose-600">Rose</span>
+                        <span class="text-xl font-light text-gray-600">Flower Shop</span>
+                    </a>
+                </div>
+                
+                <nav class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="text-gray-700 hover:text-rose-600 transition font-medium" data-i18n="nav_home">Αρχική</a>
+                    <a href="about.html" class="text-gray-700 hover:text-rose-600 transition font-medium" data-i18n="nav_about">Σχετικά</a>
+                    <a href="services-public.html" class="text-gray-700 hover:text-rose-600 transition font-medium" data-i18n="nav_services">Υπηρεσίες</a>
+                    <a href="gallery-public.html" class="text-gray-700 hover:text-rose-600 transition font-medium" data-i18n="nav_gallery">Συλλογή</a>
+                    <a href="contact-public.html" class="text-rose-600 font-medium" data-i18n="nav_contact">Επικοινωνία</a>
+                    
+                    <div class="flex items-center space-x-2 border-l pl-4 ml-4">
+                        <button class="lang-btn text-sm font-medium transition" data-lang="el">EL</button>
+                        <span class="text-gray-300">|</span>
+                        <button class="lang-btn text-sm font-medium transition" data-lang="en">EN</button>
+                    </div>
+                </nav>
+
+                <button id="mobile-menu-button" class="md:hidden text-gray-600 hover:text-rose-600">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-gray-50" data-i18n="nav_home">Αρχική</a>
+                <a href="about.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-gray-50" data-i18n="nav_about">Σχετικά</a>
+                <a href="services-public.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-gray-50" data-i18n="nav_services">Υπηρεσίες</a>
+                <a href="gallery-public.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-gray-50" data-i18n="nav_gallery">Συλλογή</a>
+                <a href="contact-public.html" class="block px-3 py-2 rounded-md text-base font-medium text-rose-600 hover:bg-gray-50" data-i18n="nav_contact">Επικοινωνία</a>
+                <div class="px-3 py-2 flex space-x-4">
+                    <button class="lang-btn text-base font-medium" data-lang="el">Ελληνικά</button>
+                    <button class="lang-btn text-base font-medium" data-lang="en">English</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 bg-gradient-to-br from-rose-50 to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in">
+            <h1 class="text-5xl md:text-6xl font-serif font-bold text-gray-900 mb-6" data-i18n="contact_hero_title">
+                Επικοινωνήστε μαζί μας
+            </h1>
+            <p class="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto" data-i18n="contact_hero_subtitle">
+                Είμαστε εδώ να σας βοηθήσουμε να δημιουργήσουμε τον τέλειο ανθοστολισμό
+            </p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+                
+                <!-- Contact Information -->
+                <div class="slide-in-left">
+                    <h2 class="text-3xl font-serif font-bold text-gray-900 mb-8" data-i18n="contact_info_title">Στοιχεία Επικοινωνίας</h2>
+                    
+                    <div class="space-y-6">
+                        <!-- Address -->
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="map-pin" class="w-6 h-6 text-rose-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1" data-i18n="contact_address_label">Διεύθυνση</h3>
+                                <p class="text-gray-700">Ρέθυμνο, Κρήτη 74100</p>
+                                <p class="text-gray-700">Ελλάδα</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Phone -->
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="phone" class="w-6 h-6 text-rose-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1" data-i18n="contact_phone_label">Τηλέφωνο</h3>
+                                <a href="tel:+306970431472" class="text-rose-600 hover:text-rose-700 font-medium">+30 697 043 1472</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Email -->
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="mail" class="w-6 h-6 text-rose-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1" data-i18n="contact_email_label">Email</h3>
+                                <a href="mailto:annantakaki9@gmail.com" class="text-rose-600 hover:text-rose-700 font-medium">annantakaki9@gmail.com</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Hours -->
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="clock" class="w-6 h-6 text-rose-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1" data-i18n="contact_hours_label">Ώρες Λειτουργίας</h3>
+                                <p class="text-gray-700" data-i18n="contact_hours_weekdays">Δευτέρα - Σάββατο: 09:00 - 21:00</p>
+                                <p class="text-gray-700" data-i18n="contact_hours_sunday">Κυριακή: Κλειστά</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="slide-in-right">
+                    <div class="bg-rose-50/50 rounded-2xl p-8">
+                        <h2 class="text-3xl font-serif font-bold text-gray-900 mb-8" data-i18n="contact_form_title">Στείλτε μας Μήνυμα</h2>
+                        
+                        <form id="contact-form" class="space-y-6">
+                            
+                            <!-- Name -->
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700 mb-2" data-i18n="contact_form_name">Ονοματεπώνυμο *</label>
+                                <input 
+                                    type="text" 
+                                    id="name" 
+                                    name="name" 
+                                    required 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent transition"
+                                    data-i18n-placeholder="contact_form_name_placeholder"
+                                    placeholder="Το όνομά σας"
+                                >
+                            </div>
+
+                            <!-- Email -->
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-2" data-i18n="contact_form_email">Email *</label>
+                                <input 
+                                    type="email" 
+                                    id="email" 
+                                    name="email" 
+                                    required 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent transition"
+                                    data-i18n-placeholder="contact_form_email_placeholder"
+                                    placeholder="email@example.com"
+                                >
+                            </div>
+
+                            <!-- Phone -->
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-gray-700 mb-2" data-i18n="contact_form_phone">Τηλέφωνο</label>
+                                <input 
+                                    type="tel" 
+                                    id="phone" 
+                                    name="phone" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent transition"
+                                    data-i18n-placeholder="contact_form_phone_placeholder"
+                                    placeholder="+30 123 456 7890"
+                                >
+                            </div>
+
+                            <!-- Event Type -->
+                            <div>
+                                <label for="event_type" class="block text-sm font-medium text-gray-700 mb-2" data-i18n="contact_form_event_type">Τύπος Εκδήλωσης</label>
+                                <input 
+                                    type="text" 
+                                    id="event_type" 
+                                    name="event_type" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent transition"
+                                    data-i18n-placeholder="contact_form_event_type_placeholder"
+                                    placeholder="π.χ. Γάμος, Βάπτιση"
+                                >
+                            </div>
+
+                            <!-- Event Date -->
+                            <div>
+                                <label for="event_date" class="block text-sm font-medium text-gray-700 mb-2" data-i18n="contact_form_event_date">Ημερομηνία Εκδήλωσης</label>
+                                <input 
+                                    type="date" 
+                                    id="event_date" 
+                                    name="event_date" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent transition"
+                                >
+                            </div>
+
+                            <!-- Message -->
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-gray-700 mb-2" data-i18n="contact_form_message">Μήνυμα *</label>
+                                <textarea 
+                                    id="message" 
+                                    name="message" 
+                                    required 
+                                    rows="5" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent transition resize-none"
+                                    data-i18n-placeholder="contact_form_message_placeholder"
+                                    placeholder="Πείτε μας περισσότερα για τις ανάγκες σας..."
+                                ></textarea>
+                            </div>
+
+                            <!-- Hidden field for service_type -->
+                            <input type="hidden" id="service_type" name="service_type" value="">
+
+                            <!-- Submit Button -->
+                            <button 
+                                type="submit" 
+                                id="submit-btn"
+                                class="w-full bg-rose-600 hover:bg-rose-700 text-white px-6 py-4 rounded-lg font-medium transition flex items-center justify-center space-x-2"
+                            >
+                                <i data-lucide="send" class="w-5 h-5"></i>
+                                <span id="submit-text" data-i18n="contact_form_submit">Αποστολή Μηνύματος</span>
+                            </button>
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Map -->
+            <div class="rounded-2xl overflow-hidden shadow-xl h-96">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3208.4576888!2d24.4733!3d35.3667!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzXCsDIyJzAwLjEiTiAyNMKwMjgnMjMuOSJF!5e0!3m2!1sen!2sgr!4v1234567890" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="Rose Flower Shop Location"
+                ></iframe>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+                <div>
+                    <h3 class="text-2xl font-serif font-bold mb-4">Rose Flower Shop</h3>
+                    <p class="text-gray-400">Ρέθυμνο, Κρήτη</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Ωράριο Λειτουργίας</h4>
+                    <p class="text-gray-400">Δευ-Σάβ: 9:00 - 21:00</p>
+                    <p class="text-gray-400">Κυρ: Κλειστά</p>
+                </div>
+                <div class="flex flex-col space-y-1">
+                    <h4 class="font-semibold mb-4">Social</h4>
+                    <a href="https://www.facebook.com/anna.ntakakh" target="_blank" class="text-gray-400 hover:text-white transition">Facebook</a>
+                    <a href="https://www.tiktok.com/@anna.ntakakh" target="_blank" class="text-gray-400 hover:text-white transition">TikTok</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+                &copy; 2026 Rose Flower Shop. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <!-- JavaScript -->
+    <script>
+        // ========================================
+        // TRANSLATIONS
+        // ========================================
+        
+        const translations = {
+            el: {
+                nav_home: 'Αρχική',
+                nav_about: 'Σχετικά',
+                nav_services: 'Υπηρεσίες',
+                nav_gallery: 'Συλλογή',
+                nav_contact: 'Επικοινωνία',
+                contact_hero_title: 'Επικοινωνήστε μαζί μας',
+                contact_hero_subtitle: 'Είμαστε εδώ να σας βοηθήσουμε να δημιουργήσουμε τον τέλειο ανθοστολισμό',
+                contact_info_title: 'Στοιχεία Επικοινωνίας',
+                contact_address_label: 'Διεύθυνση',
+                contact_phone_label: 'Τηλέφωνο',
+                contact_email_label: 'Email',
+                contact_hours_label: 'Ώρες Λειτουργίας',
+                contact_hours_weekdays: 'Δευτέρα - Σάββατο: 09:00 - 21:00',
+                contact_hours_sunday: 'Κυριακή: Κλειστά',
+                contact_form_title: 'Στείλτε μας Μήνυμα',
+                contact_form_name: 'Ονοματεπώνυμο *',
+                contact_form_name_placeholder: 'Το όνομά σας',
+                contact_form_email: 'Email *',
+                contact_form_email_placeholder: 'email@example.com',
+                contact_form_phone: 'Τηλέφωνο',
+                contact_form_phone_placeholder: '+30 123 456 7890',
+                contact_form_event_type: 'Τύπος Εκδήλωσης',
+                contact_form_event_type_placeholder: 'π.χ. Γάμος, Βάπτιση',
+                contact_form_event_date: 'Ημερομηνία Εκδήλωσης',
+                contact_form_message: 'Μήνυμα *',
+                contact_form_message_placeholder: 'Πείτε μας περισσότερα για τις ανάγκες σας...',
+                contact_form_submit: 'Αποστολή Μηνύματος',
+                contact_form_sending: 'Αποστολή...',
+                contact_form_success: 'Το μήνυμά σας στάλθηκε επιτυχώς! Θα επικοινωνήσουμε σύντομα μαζί σας.',
+                contact_form_error: 'Κάτι πήγε στραβά. Παρακαλώ δοκιμάστε ξανά.'
+            },
+            en: {
+                nav_home: 'Home',
+                nav_about: 'About',
+                nav_services: 'Services',
+                nav_gallery: 'Gallery',
+                nav_contact: 'Contact',
+                contact_hero_title: 'Contact Us',
+                contact_hero_subtitle: 'We are here to help you create the perfect floral arrangement',
+                contact_info_title: 'Contact Information',
+                contact_address_label: 'Address',
+                contact_phone_label: 'Phone',
+                contact_email_label: 'Email',
+                contact_hours_label: 'Opening Hours',
+                contact_hours_weekdays: 'Monday - Saturday: 09:00 - 21:00',
+                contact_hours_sunday: 'Sunday: Closed',
+                contact_form_title: 'Send Us a Message',
+                contact_form_name: 'Full Name *',
+                contact_form_name_placeholder: 'Your name',
+                contact_form_email: 'Email *',
+                contact_form_email_placeholder: 'email@example.com',
+                contact_form_phone: 'Phone',
+                contact_form_phone_placeholder: '+30 123 456 7890',
+                contact_form_event_type: 'Event Type',
+                contact_form_event_type_placeholder: 'e.g. Wedding, Baptism',
+                contact_form_event_date: 'Event Date',
+                contact_form_message: 'Message *',
+                contact_form_message_placeholder: 'Tell us more about your needs...',
+                contact_form_submit: 'Send Message',
+                contact_form_sending: 'Sending...',
+                contact_form_success: 'Your message was sent successfully! We will contact you soon.',
+                contact_form_error: 'Something went wrong. Please try again.'
+            }
+        };
+
+        function getCurrentLanguage() {
+            return localStorage.getItem('language') || 'el';
+        }
+
+        function t(key) {
+            const lang = getCurrentLanguage();
+            return translations[lang][key] || key;
+        }
+
+        function updatePageLanguage() {
+            const lang = getCurrentLanguage();
+            
+            // Update text content
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update placeholders
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (translations[lang][key]) {
+                    el.placeholder = translations[lang][key];
+                }
+            });
+            
+            // Update active language button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                const btnLang = btn.getAttribute('data-lang');
+                if (btnLang === lang) {
+                    btn.classList.add('text-rose-600', 'font-semibold');
+                    btn.classList.remove('text-gray-500');
+                } else {
+                    btn.classList.remove('text-rose-600', 'font-semibold');
+                    btn.classList.add('text-gray-500');
+                }
+            });
+        }
+
+        function setLanguage(lang) {
+            localStorage.setItem('language', lang);
+            updatePageLanguage();
+        }
+
+        // ========================================
+        // TOAST NOTIFICATIONS
+        // ========================================
+        
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast px-6 py-4 rounded-lg shadow-lg text-white ${type === 'success' ? 'bg-green-600' : 'bg-red-600'}`;
+            
+            const icon = type === 'success' ? 
+                '<svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>' :
+                '<svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
+            
+            toast.innerHTML = icon + message;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('hide');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // ========================================
+        // URL PARAMETER PRE-FILL
+        // ========================================
+        
+        function preFillFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const serviceParam = urlParams.get('service');
+            
+            if (serviceParam) {
+                const eventTypeInput = document.getElementById('event_type');
+                const serviceTypeInput = document.getElementById('service_type');
+                
+                eventTypeInput.value = decodeURIComponent(serviceParam);
+                serviceTypeInput.value = decodeURIComponent(serviceParam);
+            }
+        }
+
+        // ========================================
+        // FORM SUBMISSION
+        // ========================================
+        
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submit-btn');
+            const submitText = document.getElementById('submit-text');
+            
+            // Disable button and show loading state
+            submitBtn.disabled = true;
+            submitText.textContent = t('contact_form_sending');
+            
+            // Get form data
+            const formData = {
+                id: 'inq_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                created_date: new Date().toISOString(),
+                updated_date: new Date().toISOString(),
+                created_by: 'web',
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                event_type: document.getElementById('event_type').value,
+                event_date: document.getElementById('event_date').value,
+                message: document.getElementById('message').value,
+                service_type: document.getElementById('service_type').value,
+                status: 'new'
+            };
+            
+            // Simulate async operation
+            setTimeout(() => {
+                try {
+                    // Get existing inquiries
+                    const inquiries = JSON.parse(localStorage.getItem('inquiries') || '[]');
+                    
+                    // Add new inquiry
+                    inquiries.push(formData);
+                    
+                    // Save to localStorage
+                    localStorage.setItem('inquiries', JSON.stringify(inquiries));
+                    
+                    // Show success message
+                    showToast(t('contact_form_success'), 'success');
+                    
+                    // Reset form
+                    document.getElementById('contact-form').reset();
+                    
+                    // Clear hidden service_type field
+                    document.getElementById('service_type').value = '';
+                    
+                } catch (error) {
+                    console.error('Error saving inquiry:', error);
+                    showToast(t('contact_form_error'), 'error');
+                } finally {
+                    // Re-enable button
+                    submitBtn.disabled = false;
+                    submitText.textContent = t('contact_form_submit');
+                }
+            }, 500);
+        });
+
+        // ========================================
+        // EVENT LISTENERS
+        // ========================================
+        
+        // Language switcher
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                setLanguage(this.getAttribute('data-lang'));
+            });
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // ========================================
+        // INITIALIZE
+        // ========================================
+        
+        window.addEventListener('DOMContentLoaded', function() {
+            updatePageLanguage();
+            preFillFromURL();
+            
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+</html>
+
+<!--
+SUMMARY & INTEGRATION NOTES:
+
+This is the public Contact page for Rose Flower Shop.
+
+DATA INTEGRATION:
+- Writes to localStorage key 'inquiries' (shared with admin inquiries-manage.html)
+- When users submit the form, admin can view/manage inquiries in the admin panel
+- All inquiries are created with status: "new"
+
+URL PARAMETER PRE-FILL:
+- If URL contains ?service=VALUE, the Event Type field is pre-filled
+- The service_type hidden field is also populated for admin reference
+- Example: contact-public.html?service=Νυφική%20Ανθοδέσμη
+
+FEATURES IMPLEMENTED:
+- Two-column layout (contact info + form) on large screens, stacked on mobile
+- Contact information with icon badges:
+  - Address (Rethymno, Crete)
+  - Phone (+30 697 043 1472)
+  - Email (annantakaki9@gmail.com)
+  - Opening Hours (Mon-Sat 9-21, Sun closed)
+- Contact form with validation:
+  - Name (required)
+  - Email (required, type="email")
+  - Phone (optional)
+  - Event Type (optional, pre-filled from URL)
+  - Event Date (optional, type="date")
+  - Message (required, textarea)
+  - Hidden service_type field (for tracking service inquiries)
+- Form submission:
+  - Client-side validation (HTML5 required attributes)
+  - Creates ContactInquiry object with all fields
+  - Saves to localStorage['inquiries']
+  - Shows success/error toast notification
+  - Resets form on success
+- Toast notifications (green for success, red for error, auto-dismiss after 3s)
+- Embedded Google Map (Rethymno, Crete coordinates)
+- Slide-in animations (info from left, form from right)
+- Language switching (Greek/English)
+- Mobile responsive navbar and footer
+
+ASSUMPTIONS:
+- Phone and email are clickable links (tel: and mailto:)
+- Google Maps iframe uses placeholder coordinates for Rethymno
+- Form submission is instant (no actual API call)
+- All inquiries default to status "new"
+-->

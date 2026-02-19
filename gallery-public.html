@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Η Συλλογή μας - Rose Flower Shop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { fontFamily: { sans:['Inter','sans-serif'], serif:['Playfair Display','serif'] }, colors: { rose:{ 50:'#fff1f2',100:'#ffe4e6',200:'#fecdd3',600:'#e11d48',700:'#be123c' } } } }
+        }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes fadeInScale{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:scale(1)}}
+        .fade-in{animation:fadeIn .6s ease-out forwards}
+        .stagger-1{animation:fadeInScale .5s ease-out .05s forwards;opacity:0}
+        .stagger-2{animation:fadeInScale .5s ease-out .10s forwards;opacity:0}
+        .stagger-3{animation:fadeInScale .5s ease-out .15s forwards;opacity:0}
+        .stagger-4{animation:fadeInScale .5s ease-out .20s forwards;opacity:0}
+        .stagger-5{animation:fadeInScale .5s ease-out .25s forwards;opacity:0}
+        .stagger-6{animation:fadeInScale .5s ease-out .30s forwards;opacity:0}
+        .lightbox{display:none;position:fixed;inset:0;background-color:rgba(0,0,0,.95);z-index:9999;align-items:center;justify-content:center}
+        .lightbox.active{display:flex}
+        .lightbox-image{max-width:90%;max-height:90vh;object-fit:contain}
+    </style>
+</head>
+<body class="bg-white text-gray-900 font-sans">
+
+<!-- Navbar -->
+<header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+            <a href="index.html" class="flex items-center space-x-2">
+                <span class="text-2xl font-serif font-bold text-rose-600">Rose</span>
+                <span class="text-xl font-light text-gray-600">Flower Shop</span>
+            </a>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="index.html" class="text-gray-700 hover:text-rose-600 transition font-medium" data-i18n="nav_home">Αρχική</a>
+                <a href="about.html" class="text-gray-700 hover:text-rose-600 transition font-medium" data-i18n="nav_about">Σχετικά</a>
+                <a href="services-public.html" class="text-gray-700 hover:text-rose-600 transition font-medium" data-i18n="nav_services">Υπηρεσίες</a>
+                <a href="gallery-public.html" class="text-rose-600 font-medium" data-i18n="nav_gallery">Συλλογή</a>
+                <a href="contact-public.html" class="text-gray-700 hover:text-rose-600 transition font-medium" data-i18n="nav_contact">Επικοινωνία</a>
+                <div class="flex items-center space-x-2 border-l pl-4 ml-4">
+                    <button class="lang-btn text-sm font-medium transition" data-lang="el">EL</button>
+                    <span class="text-gray-300">|</span>
+                    <button class="lang-btn text-sm font-medium transition" data-lang="en">EN</button>
+                </div>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-gray-600 hover:text-rose-600">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+        </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-gray-50" data-i18n="nav_home">Αρχική</a>
+            <a href="about.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-gray-50" data-i18n="nav_about">Σχετικά</a>
+            <a href="services-public.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-gray-50" data-i18n="nav_services">Υπηρεσίες</a>
+            <a href="gallery-public.html" class="block px-3 py-2 rounded-md text-base font-medium text-rose-600 hover:bg-gray-50" data-i18n="nav_gallery">Συλλογή</a>
+            <a href="contact-public.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-gray-50" data-i18n="nav_contact">Επικοινωνία</a>
+            <div class="px-3 py-2 flex space-x-4">
+                <button class="lang-btn text-base font-medium" data-lang="el">Ελληνικά</button>
+                <button class="lang-btn text-base font-medium" data-lang="en">English</button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Hero -->
+<section class="relative pt-32 pb-20 bg-gradient-to-br from-rose-50 to-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in">
+        <h1 class="text-5xl md:text-6xl font-serif font-bold text-gray-900 mb-6" data-i18n="gallery_hero_title">Η Συλλογή μας</h1>
+        <p class="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto" data-i18n="gallery_hero_subtitle">Εξερευνήστε τα έργα μας και εμπνευστείτε για τη δική σας ξεχωριστή στιγμή</p>
+    </div>
+</section>
+
+<!-- Category Filters -->
+<section class="py-4 border-b sticky top-20 bg-white z-40 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="overflow-x-auto">
+            <div class="inline-flex bg-rose-50 p-2 rounded-xl gap-2 min-w-max">
+                <button class="category-tab px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-medium transition whitespace-nowrap" data-category="all" data-i18n="gallery_all">Όλα</button>
+                <button class="category-tab px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-medium transition whitespace-nowrap" data-category="Weddings" data-i18n="category_weddings">Γάμοι</button>
+                <button class="category-tab px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-medium transition whitespace-nowrap" data-category="Baptisms" data-i18n="category_baptisms">Βαπτίσεις</button>
+                <button class="category-tab px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-medium transition whitespace-nowrap" data-category="Events" data-i18n="category_events">Εκδηλώσεις</button>
+                <button class="category-tab px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-medium transition whitespace-nowrap" data-category="Bouquets" data-i18n="category_bouquets">Μπουκέτα</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Image Grid -->
+<section class="py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div id="loading-spinner" class="flex justify-center items-center py-20">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-rose-600"></div>
+        </div>
+        <div id="empty-state" class="hidden text-center py-20">
+            <i data-lucide="image" class="w-16 h-16 text-gray-400 mx-auto mb-4"></i>
+            <p class="text-gray-500 text-lg" data-i18n="gallery_empty">Δεν υπάρχουν εικόνες σε αυτή την κατηγορία.</p>
+        </div>
+        <div id="image-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </div>
+</section>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox">
+    <button id="lightbox-close" class="absolute top-8 right-8 text-white hover:text-gray-300 z-50"><i data-lucide="x" class="w-10 h-10"></i></button>
+    <button id="lightbox-prev" class="absolute left-8 text-white hover:text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed"><i data-lucide="chevron-left" class="w-12 h-12"></i></button>
+    <img id="lightbox-img" class="lightbox-image" src="" alt="Gallery Image">
+    <button id="lightbox-next" class="absolute right-8 text-white hover:text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed"><i data-lucide="chevron-right" class="w-12 h-12"></i></button>
+</div>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+            <div>
+                <h3 class="text-2xl font-serif font-bold mb-4">Rose Flower Shop</h3>
+                <p class="text-gray-400">Ρέθυμνο, Κρήτη</p>
+            </div>
+            <div>
+                <h4 class="font-semibold mb-4">Ωράριο Λειτουργίας</h4>
+                <p class="text-gray-400">Δευ-Σάβ: 9:00 - 21:00</p>
+                <p class="text-gray-400">Κυρ: Κλειστά</p>
+            </div>
+            <div class="flex flex-col space-y-1">
+                <h4 class="font-semibold mb-4">Social</h4>
+                <a href="https://www.facebook.com/anna.ntakakh" target="_blank" class="text-gray-400 hover:text-white transition">Facebook</a>
+                <a href="https://www.tiktok.com/@anna.ntakakh" target="_blank" class="text-gray-400 hover:text-white transition">TikTok</a>
+            </div>
+        </div>
+        <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+            &copy; 2026 Rose Flower Shop. All rights reserved.
+        </div>
+    </div>
+</footer>
+
+<script>
+const GITHUB_OWNER = 'n31925131-dotcom';
+const GITHUB_REPO  = 'RoseFlowerShop';
+const GITHUB_FILE  = 'gallery-data.json';
+const RAW_URL = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/main/${GITHUB_FILE}`;
+
+const translations = {
+    el: { nav_home:'Αρχική', nav_about:'Σχετικά', nav_services:'Υπηρεσίες', nav_gallery:'Συλλογή', nav_contact:'Επικοινωνία', gallery_hero_title:'Η Συλλογή μας', gallery_hero_subtitle:'Εξερευνήστε τα έργα μας και εμπνευστείτε για τη δική σας ξεχωριστή στιγμή', gallery_all:'Όλα', category_weddings:'Γάμοι', category_baptisms:'Βαπτίσεις', category_events:'Εκδηλώσεις', category_bouquets:'Μπουκέτα', gallery_empty:'Δεν υπάρχουν εικόνες σε αυτή την κατηγορία.' },
+    en: { nav_home:'Home', nav_about:'About', nav_services:'Services', nav_gallery:'Gallery', nav_contact:'Contact', gallery_hero_title:'Our Gallery', gallery_hero_subtitle:'Explore our works and get inspired for your special moment', gallery_all:'All', category_weddings:'Weddings', category_baptisms:'Baptisms', category_events:'Events', category_bouquets:'Bouquets', gallery_empty:'No images in this category.' }
+};
+
+function getCurrentLanguage() { return localStorage.getItem('language') || 'el'; }
+function updatePageLanguage() {
+    const lang = getCurrentLanguage();
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) el.textContent = translations[lang][key];
+    });
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        const isActive = btn.getAttribute('data-lang') === lang;
+        btn.classList.toggle('text-rose-600', isActive);
+        btn.classList.toggle('font-semibold', isActive);
+        btn.classList.toggle('text-gray-500', !isActive);
+    });
+}
+function setLanguage(lang) { localStorage.setItem('language', lang); updatePageLanguage(); }
+
+// Reads gallery-data.json directly from your GitHub repo — same data for every visitor on every device
+async function fetchGalleryData() {
+    try {
+        const res = await fetch(RAW_URL + '?t=' + Date.now());
+        if (!res.ok) return [];
+        return await res.json();
+    } catch(e) { return []; }
+}
+
+let activeCategory = 'all';
+let allImages = [];
+let filteredImages = [];
+let currentLightboxIndex = 0;
+
+function renderImages() {
+    filteredImages = activeCategory === 'all' ? [...allImages] : allImages.filter(img => img.category === activeCategory);
+    const grid = document.getElementById('image-grid');
+    const empty = document.getElementById('empty-state');
+    if (filteredImages.length === 0) {
+        grid.innerHTML = '';
+        empty.classList.remove('hidden');
+    } else {
+        empty.classList.add('hidden');
+        grid.innerHTML = filteredImages.map((img, i) => `
+            <div class="relative aspect-square rounded-2xl overflow-hidden shadow-lg cursor-pointer group stagger-${(i%6)+1}" onclick="openLightbox(${i})">
+                <img src="${img.image_url}" alt="Gallery Image" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>`).join('');
+    }
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+}
+
+function updateCategoryTabs() {
+    document.querySelectorAll('.category-tab').forEach(btn => {
+        const isActive = btn.getAttribute('data-category') === activeCategory;
+        btn.classList.toggle('bg-rose-600', isActive);
+        btn.classList.toggle('text-white', isActive);
+        btn.classList.toggle('bg-white', !isActive);
+        btn.classList.toggle('text-rose-700', !isActive);
+    });
+}
+
+function openLightbox(index) {
+    currentLightboxIndex = index; updateLightbox();
+    document.getElementById('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+function updateLightbox() {
+    const img = document.getElementById('lightbox-img');
+    if (filteredImages[currentLightboxIndex]) img.src = filteredImages[currentLightboxIndex].image_url;
+    document.getElementById('lightbox-prev').disabled = currentLightboxIndex === 0;
+    document.getElementById('lightbox-next').disabled = currentLightboxIndex === filteredImages.length - 1;
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+}
+function navigateLightbox(dir) {
+    if (dir==='prev' && currentLightboxIndex>0) currentLightboxIndex--;
+    else if (dir==='next' && currentLightboxIndex<filteredImages.length-1) currentLightboxIndex++;
+    updateLightbox();
+}
+window.openLightbox = openLightbox;
+
+document.querySelectorAll('.category-tab').forEach(btn => {
+    btn.addEventListener('click', function() {
+        activeCategory = this.getAttribute('data-category');
+        updateCategoryTabs(); renderImages();
+    });
+});
+document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+document.getElementById('lightbox-prev').addEventListener('click', () => navigateLightbox('prev'));
+document.getElementById('lightbox-next').addEventListener('click', () => navigateLightbox('next'));
+document.getElementById('lightbox').addEventListener('click', function(e) { if(e.target===this) closeLightbox(); });
+document.addEventListener('keydown', function(e) {
+    if (document.getElementById('lightbox').classList.contains('active')) {
+        if (e.key==='Escape') closeLightbox();
+        if (e.key==='ArrowLeft') navigateLightbox('prev');
+        if (e.key==='ArrowRight') navigateLightbox('next');
+    }
+});
+document.querySelectorAll('.lang-btn').forEach(btn => btn.addEventListener('click', function() { setLanguage(this.getAttribute('data-lang')); }));
+document.getElementById('mobile-menu-button').addEventListener('click', function() { document.getElementById('mobile-menu').classList.toggle('hidden'); });
+
+window.addEventListener('DOMContentLoaded', async function() {
+    updatePageLanguage(); updateCategoryTabs();
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+    allImages = await fetchGalleryData();
+    document.getElementById('loading-spinner').classList.add('hidden');
+    renderImages();
+});
+</script>
+</body>
+</html>

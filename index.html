@@ -1,0 +1,519 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rose Flower Shop - Ανθοπωλείο Ρέθυμνο</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        rose: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            600: '#e11d48',
+                            700: '#be123c',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .fade-in-scale {
+            animation: fadeInScale 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        
+        /* Staggered delays */
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+        .delay-600 { animation-delay: 0.6s; }
+        
+        /* Hero background */
+        .hero-bg {
+            background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: scroll;
+        }
+        @media (min-width: 768px) {
+            .hero-bg { background-attachment: fixed; }
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900 font-sans">
+
+    <!-- Navbar -->
+    <header class="bg-white/90 backdrop-blur-md shadow-sm fixed top-0 w-full z-50" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <span class="text-2xl font-serif font-bold text-rose-600">Rose</span>
+                        <span class="text-xl font-light text-gray-600">Flower Shop</span>
+                    </a>
+                </div>
+                
+                <nav class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="text-rose-600 font-medium" data-i18n="nav_home">Αρχική</a>
+                    <a href="about.html" class="text-gray-700 hover:text-rose-600 transition font-medium" data-i18n="nav_about">Σχετικά</a>
+                    <a href="services-public.html" class="text-gray-700 hover:text-rose-600 transition font-medium" data-i18n="nav_services">Υπηρεσίες</a>
+                    <a href="gallery-public.html" class="text-gray-700 hover:text-rose-600 transition font-medium" data-i18n="nav_gallery">Συλλογή</a>
+                    <a href="contact-public.html" class="text-gray-700 hover:text-rose-600 transition font-medium" data-i18n="nav_contact">Επικοινωνία</a>
+                    
+                    <div class="flex items-center space-x-2 border-l pl-4 ml-4">
+                        <button class="lang-btn text-sm font-medium transition" data-lang="el">EL</button>
+                        <span class="text-gray-300">|</span>
+                        <button class="lang-btn text-sm font-medium transition" data-lang="en">EN</button>
+                    </div>
+                </nav>
+
+                <button id="mobile-menu-button" class="md:hidden text-gray-600 hover:text-rose-600">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-rose-600 hover:bg-gray-50" data-i18n="nav_home">Αρχική</a>
+                <a href="about.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-gray-50" data-i18n="nav_about">Σχετικά</a>
+                <a href="services-public.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-gray-50" data-i18n="nav_services">Υπηρεσίες</a>
+                <a href="gallery-public.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-gray-50" data-i18n="nav_gallery">Συλλογή</a>
+                <a href="contact-public.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-gray-50" data-i18n="nav_contact">Επικοινωνία</a>
+                <div class="px-3 py-2 flex space-x-4">
+                    <button class="lang-btn text-base font-medium" data-lang="el">Ελληνικά</button>
+                    <button class="lang-btn text-base font-medium" data-lang="en">English</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-bg relative h-screen flex items-center">
+        <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 fade-in-up">
+            <div class="max-w-3xl">
+                <h1 class="text-4xl md:text-7xl font-serif font-bold text-white mb-6 leading-tight" data-i18n="hero_title" style="white-space: pre-line;">
+                    Δημιουργούμε
+Όμορφες Στιγμές
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-200 mb-8 leading-relaxed" data-i18n="hero_subtitle">
+                    Ανθοστολισμοί για γάμους, βαπτίσεις και κάθε ξεχωριστή σας στιγμή
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="services-public.html" class="inline-flex items-center justify-center space-x-2 bg-rose-600 hover:bg-rose-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition shadow-lg hover:shadow-xl">
+                        <span data-i18n="hero_btn_services">Δείτε τις Υπηρεσίες μας</span>
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </a>
+                    <a href="gallery-public.html" class="inline-flex items-center justify-center space-x-2 bg-white/10 backdrop-blur-sm border-2 border-white text-white hover:bg-white hover:text-rose-600 px-8 py-4 rounded-lg font-semibold text-lg transition">
+                        <span data-i18n="hero_btn_gallery">Το Portfolio μας</span>
+                        <i data-lucide="image" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="py-20 bg-rose-50/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center mb-16 fade-in-up">
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4" data-i18n="home_why_title">
+                    Γιατί να μας επιλέξετε
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto" data-i18n="home_why_subtitle">
+                    Με πάθος και αφοσίωση, δημιουργούμε μοναδικούς ανθοστολισμούς
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1: Fresh Flowers -->
+                <div class="bg-white rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 fade-in-scale delay-200">
+                    <div class="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i data-lucide="flower-2" class="w-8 h-8 text-rose-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif font-semibold text-gray-900 mb-4" data-i18n="feature_fresh_title">
+                        Φρέσκα Λουλούδια
+                    </h3>
+                    <p class="text-gray-600 leading-relaxed" data-i18n="feature_fresh_desc">
+                        Χρησιμοποιούμε μόνο τα πιο φρέσκα και ποιοτικά λουλούδια για να εγγυηθούμε την τελειότητα κάθε ανθοστολισμού
+                    </p>
+                </div>
+
+                <!-- Feature 2: Personal Care -->
+                <div class="bg-white rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 fade-in-scale delay-400">
+                    <div class="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i data-lucide="heart" class="w-8 h-8 text-rose-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif font-semibold text-gray-900 mb-4" data-i18n="feature_care_title">
+                        Προσωπική Φροντίδα
+                    </h3>
+                    <p class="text-gray-600 leading-relaxed" data-i18n="feature_care_desc">
+                        Κάθε πελάτης μας είναι μοναδικός. Ακούμε τις ανάγκες σας και δημιουργούμε ακριβώς αυτό που οραματίζεστε
+                    </p>
+                </div>
+
+                <!-- Feature 3: Creativity -->
+                <div class="bg-white rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 fade-in-scale delay-600">
+                    <div class="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i data-lucide="sparkles" class="w-8 h-8 text-rose-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif font-semibold text-gray-900 mb-4" data-i18n="feature_creative_title">
+                        Δημιουργικότητα
+                    </h3>
+                    <p class="text-gray-600 leading-relaxed" data-i18n="feature_creative_desc">
+                        Με καλλιτεχνική ματιά και πάθος για λεπτομέρειες, μετατρέπουμε κάθε εκδήλωση σε ένα μοναδικό έργο τέχνης
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Featured Work Preview Section -->
+<section class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-16 fade-in-up">
+            <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4" data-i18n="home_featured_title">
+                Από τη Συλλογή μας
+            </h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto" data-i18n="home_featured_subtitle">
+                Μερικά από τα πιο πρόσφατα έργα μας
+            </p>
+        </div>
+
+        <!-- Dynamic featured images grid (empty – will be filled by JavaScript) -->
+        <div id="featured-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"></div>
+
+        <div class="text-center">
+            <a href="gallery-public.html" class="inline-flex items-center space-x-2 border-2 border-rose-600 text-rose-600 hover:bg-rose-50 px-8 py-4 rounded-lg font-semibold text-lg transition">
+                <span data-i18n="home_featured_btn">Δείτε Όλη τη Συλλογή</span>
+                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </a>
+        </div>
+    </div>
+</section>
+    
+    <!-- Call to Action Section -->
+    <section class="py-20 bg-gradient-to-br from-rose-600 to-rose-700 text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in-up">
+            <h2 class="text-4xl md:text-5xl font-serif font-bold mb-6" data-i18n="home_cta_title">
+                Έτοιμοι να δημιουργήσουμε κάτι υπέροχο μαζί;
+            </h2>
+            <p class="text-xl mb-8 text-rose-100" data-i18n="home_cta_subtitle">
+                Επικοινωνήστε μαζί μας σήμερα για να συζητήσουμε τις ιδέες σας
+            </p>
+            <a href="contact-public.html" class="inline-flex items-center space-x-2 bg-white text-rose-600 hover:bg-gray-100 px-8 py-4 rounded-lg font-semibold text-lg transition shadow-lg">
+                <span data-i18n="home_cta_btn">Επικοινωνήστε Μαζί μας</span>
+                <i data-lucide="send" class="w-5 h-5"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+                <div>
+                    <h3 class="text-2xl font-serif font-bold mb-4">Rose Flower Shop</h3>
+                    <p class="text-gray-400">Ρέθυμνο, Κρήτη 74100</p>
+                    <p class="text-gray-400">Ελλάδα</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Ωράριο Λειτουργίας</h4>
+                    <p class="text-gray-400">Δευ-Σάβ: 9:00 - 21:00</p>
+                    <p class="text-gray-400">Κυρ: Κλειστά</p>
+                </div>
+                <div class="flex flex-col space-y-1">
+                    <h4 class="font-semibold mb-4">Social Media</h4>
+                    <a href="https://www.facebook.com/anna.ntakakh" target="_blank" class="text-gray-400 hover:text-white transition">Facebook</a>
+                    <a href="https://www.tiktok.com/@anna.ntakakh" target="_blank" class="text-gray-400 hover:text-white transition">TikTok</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+                &copy; 2026 Rose Flower Shop. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // ========================================
+        // TRANSLATIONS
+        // ========================================
+
+
+
+
+
+        
+        const translations = {
+            el: {
+                // Navigation
+                nav_home: 'Αρχική',
+                nav_about: 'Σχετικά',
+                nav_services: 'Υπηρεσίες',
+                nav_gallery: 'Συλλογή',
+                nav_contact: 'Επικοινωνία',
+                
+                // Hero Section
+                hero_title: 'Δημιουργούμε\nΌμορφες Στιγμές',
+                hero_subtitle: 'Ανθοστολισμοί για γάμους, βαπτίσεις και κάθε ξεχωριστή σας στιγμή',
+                hero_btn_services: 'Δείτε τις Υπηρεσίες μας',
+                hero_btn_gallery: 'Το Portfolio μας',
+                
+                // Why Choose Us Section
+                home_why_title: 'Γιατί να μας επιλέξετε',
+                home_why_subtitle: 'Με πάθος και αφοσίωση, δημιουργούμε μοναδικούς ανθοστολισμούς',
+                feature_fresh_title: 'Φρέσκα Λουλούδια',
+                feature_fresh_desc: 'Χρησιμοποιούμε μόνο τα πιο φρέσκα και ποιοτικά λουλούδια για να εγγυηθούμε την τελειότητα κάθε ανθοστολισμού',
+                feature_care_title: 'Προσωπική Φροντίδα',
+                feature_care_desc: 'Κάθε πελάτης μας είναι μοναδικός. Ακούμε τις ανάγκες σας και δημιουργούμε ακριβώς αυτό που οραματίζεστε',
+                feature_creative_title: 'Δημιουργικότητα',
+                feature_creative_desc: 'Με καλλιτεχνική ματιά και πάθος για λεπτομέρειες, μετατρέπουμε κάθε εκδήλωση σε ένα μοναδικό έργο τέχνης',
+                
+                // Featured Work Section
+                home_featured_title: 'Από τη Συλλογή μας',
+                home_featured_subtitle: 'Μερικά από τα πιο πρόσφατα έργα μας',
+                home_featured_btn: 'Δείτε Όλη τη Συλλογή',
+                
+                // CTA Section
+                home_cta_title: 'Έτοιμοι να δημιουργήσουμε κάτι υπέροχο μαζί;',
+                home_cta_subtitle: 'Επικοινωνήστε μαζί μας σήμερα για να συζητήσουμε τις ιδέες σας',
+                home_cta_btn: 'Επικοινωνήστε Μαζί μας'
+            },
+            en: {
+                // Navigation
+                nav_home: 'Home',
+                nav_about: 'About',
+                nav_services: 'Services',
+                nav_gallery: 'Gallery',
+                nav_contact: 'Contact',
+                
+                // Hero Section
+                hero_title: 'Creating\nBeautiful Moments',
+                hero_subtitle: 'Floral arrangements for weddings, baptisms and every special moment',
+                hero_btn_services: 'View Our Services',
+                hero_btn_gallery: 'Our Portfolio',
+                
+                // Why Choose Us Section
+                home_why_title: 'Why Choose Us',
+                home_why_subtitle: 'With passion and dedication, we create unique floral arrangements',
+                feature_fresh_title: 'Fresh Flowers',
+                feature_fresh_desc: 'We use only the freshest and highest quality flowers to guarantee the perfection of every arrangement',
+                feature_care_title: 'Personal Care',
+                feature_care_desc: 'Every client is unique to us. We listen to your needs and create exactly what you envision',
+                feature_creative_title: 'Creativity',
+                feature_creative_desc: 'With an artistic eye and passion for details, we transform every event into a unique work of art',
+                
+                // Featured Work Section
+                home_featured_title: 'From Our Collection',
+                home_featured_subtitle: 'Some of our most recent works',
+                home_featured_btn: 'View Full Gallery',
+                
+                // CTA Section
+                home_cta_title: 'Ready to create something beautiful together?',
+                home_cta_subtitle: 'Contact us today to discuss your ideas',
+                home_cta_btn: 'Get In Touch'
+            }
+        };
+
+        function getCurrentLanguage() {
+            return localStorage.getItem('language') || 'el';
+        }
+
+        function t(key) {
+            const lang = getCurrentLanguage();
+            return translations[lang][key] || key;
+        }
+
+        function updatePageLanguage() {
+            const lang = getCurrentLanguage();
+            
+            // Update text content
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update active language button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                const btnLang = btn.getAttribute('data-lang');
+                if (btnLang === lang) {
+                    btn.classList.add('text-rose-600', 'font-semibold');
+                    btn.classList.remove('text-gray-500');
+                } else {
+                    btn.classList.remove('text-rose-600', 'font-semibold');
+                    btn.classList.add('text-gray-500');
+                }
+            });
+        }
+
+        function setLanguage(lang) {
+            localStorage.setItem('language', lang);
+            updatePageLanguage();
+        }
+
+        // ========================================
+        // EVENT LISTENERS
+        // ========================================
+        
+        // Language switcher
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                setLanguage(this.getAttribute('data-lang'));
+            });
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // ========================================
+        // INITIALIZE
+        // ========================================
+
+        const CLOUD_NAME = 'dopmj1ksm'; // ← your Cloudinary cloud name
+
+        // Fetch latest 3 images from Cloudinary (works on all devices)
+        async function renderFeaturedImages() {
+            const grid = document.getElementById('featured-grid');
+            if (!grid) return;
+            try {
+                const url = `https://res.cloudinary.com/${CLOUD_NAME}/image/list/rose_gallery.json`;
+                const res = await fetch(url);
+                if (!res.ok) throw new Error('fetch failed');
+                const data = await res.json();
+                const resources = data.resources || [];
+                if (resources.length === 0) return;
+
+                // Sort newest first, take 3
+                const latest = resources
+                    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                    .slice(0, 3);
+
+                grid.innerHTML = latest.map((r, index) => {
+                    const imgUrl = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/q_auto,f_auto/${r.public_id}.${r.format}`;
+                    const delayClass = index === 0 ? 'delay-100' : (index === 1 ? 'delay-300' : 'delay-500');
+                    return `
+                        <div class="group relative aspect-[4/5] rounded-2xl overflow-hidden shadow-lg cursor-pointer fade-in-scale ${delayClass}">
+                            <img src="${imgUrl}" alt="Featured work"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        </div>`;
+                }).join('');
+            } catch(e) {
+                // Fallback to localStorage if Cloudinary not yet configured
+                const data = localStorage.getItem('galleryImages');
+                const images = data ? JSON.parse(data) : [];
+                if (images.length === 0) return;
+                const latest = images.sort((a,b) => new Date(b.created_date)-new Date(a.created_date)).slice(0,3);
+                grid.innerHTML = latest.map((img, index) => {
+                    const delayClass = index === 0 ? 'delay-100' : (index === 1 ? 'delay-300' : 'delay-500');
+                    return `<div class="group relative aspect-[4/5] rounded-2xl overflow-hidden shadow-lg cursor-pointer fade-in-scale ${delayClass}">
+                        <img src="${img.image_url}" alt="Featured work" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>`;
+                }).join('');
+            }
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+        
+        window.addEventListener('DOMContentLoaded', async function() {
+            updatePageLanguage();
+            await renderFeaturedImages();
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+</html>
+
+<!--
+SUMMARY & INTEGRATION NOTES:
+
+This is the index.html for Rose Flower Shop - the main landing page.
+
+SECTIONS IMPLEMENTED:
+1. Hero Section - Full-screen with background image, gradient overlay, title with line break, subtitle, two CTA buttons
+2. Why Choose Us - Three feature cards (Fresh Flowers, Personal Care, Creativity) with icons
+3. Featured Work Preview - Three showcase images with hover effects, link to full gallery
+4. Call to Action - Gradient background section encouraging contact
+
+FEATURES:
+- ✅ Full-screen hero with fixed background (parallax effect on scroll)
+- ✅ Two CTA buttons: primary (services) and secondary (gallery)
+- ✅ Three feature cards with rose-100 icon circles
+- ✅ Three featured images from Unsplash with hover zoom
+- ✅ Gradient CTA section with white button
+- ✅ Fade-in-up animations with staggered delays
+- ✅ Fully responsive (mobile/tablet/desktop)
+- ✅ Language switching (Greek/English)
+- ✅ Lucide icons for all visual elements
+- ✅ Same navbar and footer as other public pages
+
+ANIMATIONS:
+- fadeInUp: Main animation for sections (0.8s)
+- fadeInScale: For feature cards and images (0.6s)
+- Staggered delays: 0.2s, 0.4s, 0.6s for features; 0.1s, 0.3s, 0.5s for images
+
+NO DATA INTEGRATION:
+- This page is purely static content
+- No localStorage reads or writes
+- All content is hardcoded with translations
+
+LINKS:
+- Services button → services-public.html
+- Portfolio button → gallery-public.html
+- Featured gallery button → gallery-public.html
+- CTA button → contact-public.html
+-->

@@ -1,0 +1,706 @@
+<!-- services-public.html -->
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Οι Υπηρεσίες μας - Rose Flower Shop</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        rose: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            600: '#e11d48',
+                            700: '#be123c',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        
+        /* Staggered delays */
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        
+        .stagger-1 { animation-delay: 0.1s; opacity: 0; }
+        .stagger-2 { animation-delay: 0.2s; opacity: 0; }
+        .stagger-3 { animation-delay: 0.3s; opacity: 0; }
+        
+        /* Line clamp */
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            animation: modalFadeIn 0.3s ease-out;
+        }
+        
+        .modal-content {
+            animation: modalSlideIn 0.3s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900 font-sans">
+
+    <!-- Navbar -->
+    <header class="bg-white shadow-sm sticky top-0 z-50" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <span class="text-2xl font-serif font-bold text-rose-600">Rose</span>
+                        <span class="text-xl font-light text-gray-600">Flower Shop</span>
+                    </a>
+                </div>
+                
+                <nav class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="text-gray-700 hover:text-rose-600 transition font-medium" data-i18n="nav_home">Αρχική</a>
+                    <a href="about.html" class="text-gray-700 hover:text-rose-600 transition font-medium" data-i18n="nav_about">Σχετικά</a>
+                    <a href="services-public.html" class="text-rose-600 font-medium" data-i18n="nav_services">Υπηρεσίες</a>
+                    <a href="gallery-public.html" class="text-gray-700 hover:text-rose-600 transition font-medium" data-i18n="nav_gallery">Συλλογή</a>
+                    <a href="contact-public.html" class="text-gray-700 hover:text-rose-600 transition font-medium" data-i18n="nav_contact">Επικοινωνία</a>
+                    
+                    <div class="flex items-center space-x-2 border-l pl-4 ml-4">
+                        <button class="lang-btn text-sm font-medium transition" data-lang="el">EL</button>
+                        <span class="text-gray-300">|</span>
+                        <button class="lang-btn text-sm font-medium transition" data-lang="en">EN</button>
+                    </div>
+                </nav>
+
+                <button id="mobile-menu-button" class="md:hidden text-gray-600 hover:text-rose-600">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-gray-50" data-i18n="nav_home">Αρχική</a>
+                <a href="about.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-gray-50" data-i18n="nav_about">Σχετικά</a>
+                <a href="services-public.html" class="block px-3 py-2 rounded-md text-base font-medium text-rose-600 hover:bg-gray-50" data-i18n="nav_services">Υπηρεσίες</a>
+                <a href="gallery-public.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-gray-50" data-i18n="nav_gallery">Συλλογή</a>
+                <a href="contact-public.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-gray-50" data-i18n="nav_contact">Επικοινωνία</a>
+                <div class="px-3 py-2 flex space-x-4">
+                    <button class="lang-btn text-base font-medium" data-lang="el">Ελληνικά</button>
+                    <button class="lang-btn text-base font-medium" data-lang="en">English</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 bg-gradient-to-br from-rose-50 to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in">
+            <h1 class="text-5xl md:text-6xl font-serif font-bold text-gray-900 mb-6" data-i18n="services_hero_title">
+                Οι Υπηρεσίες μας
+            </h1>
+            <p class="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto" data-i18n="services_hero_subtitle">
+                Εξατομικευμένες λύσεις για κάθε ξεχωριστή στιγμή
+            </p>
+        </div>
+    </section>
+
+    <!-- Services by Category -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Loading Spinner -->
+            <div id="loading-spinner" class="hidden flex justify-center items-center py-20">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-rose-600"></div>
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="hidden text-center py-20">
+                <i data-lucide="wrench" class="w-16 h-16 text-gray-400 mx-auto mb-4"></i>
+                <p class="text-gray-500 text-lg" data-i18n="services_empty">Δεν υπάρχουν διαθέσιμες υπηρεσίες αυτή τη στιγμή.</p>
+            </div>
+
+            <!-- Services Container -->
+            <div id="services-container"></div>
+        </div>
+    </section>
+
+    <!-- Service Modal -->
+    <div id="service-modal" class="hidden fixed inset-0 bg-black/50 z-50 modal-overlay items-center justify-center p-4" onclick="closeModal(event)">
+        <div class="modal-content bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+            
+            <!-- Modal Header -->
+            <div class="sticky top-0 bg-white px-6 py-4 border-b border-gray-200 flex items-center justify-between z-10">
+                <h2 id="modal-title" class="text-2xl font-serif font-bold text-gray-900"></h2>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 transition">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="px-6 py-6">
+                <!-- Image -->
+                <div id="modal-image-container" class="mb-6"></div>
+                
+                <!-- Category Badge -->
+                <div class="mb-4">
+                    <span id="modal-category" class="inline-block px-3 py-1 bg-rose-100 text-rose-700 text-sm font-medium rounded-full"></span>
+                </div>
+                
+                <!-- Description -->
+                <div class="mb-6">
+                    <p id="modal-description" class="text-gray-700 leading-relaxed"></p>
+                </div>
+                
+                <!-- Pricing -->
+                <div id="modal-pricing-container" class="mb-6"></div>
+                
+                <!-- Features -->
+                <div id="modal-features-container" class="mb-6"></div>
+                
+                <!-- Request Quote Button -->
+                <div class="pt-4 border-t border-gray-200">
+                    <a id="request-quote-btn" href="#" class="inline-flex items-center space-x-2 bg-rose-600 hover:bg-rose-700 text-white px-6 py-3 rounded-lg font-medium transition">
+                        <i data-lucide="send" class="w-5 h-5"></i>
+                        <span data-i18n="service_request_quote">Ζητήστε Προσφορά</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+                <div>
+                    <h3 class="text-2xl font-serif font-bold mb-4">Rose Flower Shop</h3>
+                    <p class="text-gray-400">Ρέθυμνο, Κρήτη</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Ωράριο Λειτουργίας</h4>
+                    <p class="text-gray-400">Δευ-Σάβ: 9:00 - 21:00</p>
+                    <p class="text-gray-400">Κυρ: Κλειστά</p>
+                </div>
+                <div class="flex flex-col space-y-1">
+                    <h4 class="font-semibold mb-4">Social</h4>
+                    <a href="https://www.facebook.com/anna.ntakakh" target="_blank" class="text-gray-400 hover:text-white transition">Facebook</a>
+                    <a href="https://www.tiktok.com/@anna.ntakakh" target="_blank" class="text-gray-400 hover:text-white transition">TikTok</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+                &copy; 2026 Rose Flower Shop. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // ========================================
+        // TRANSLATIONS
+        // ========================================
+        
+        const translations = {
+            el: {
+                nav_home: 'Αρχική',
+                nav_about: 'Σχετικά',
+                nav_services: 'Υπηρεσίες',
+                nav_gallery: 'Συλλογή',
+                nav_contact: 'Επικοινωνία',
+                services_hero_title: 'Οι Υπηρεσίες μας',
+                services_hero_subtitle: 'Εξατομικευμένες λύσεις για κάθε ξεχωριστή στιγμή',
+                category_weddings: 'Γάμοι',
+                category_baptisms: 'Βαπτίσεις',
+                category_events: 'Εκδηλώσεις',
+                category_bouquets: 'Μπουκέτα',
+                service_learn_more: 'Μάθετε περισσότερα',
+                services_empty: 'Δεν υπάρχουν διαθέσιμες υπηρεσίες αυτή τη στιγμή.',
+                service_request_quote: 'Ζητήστε Προσφορά',
+                service_features: 'Χαρακτηριστικά'
+            },
+            en: {
+                nav_home: 'Home',
+                nav_about: 'About',
+                nav_services: 'Services',
+                nav_gallery: 'Gallery',
+                nav_contact: 'Contact',
+                services_hero_title: 'Our Services',
+                services_hero_subtitle: 'Personalized solutions for every special moment',
+                category_weddings: 'Weddings',
+                category_baptisms: 'Baptisms',
+                category_events: 'Events',
+                category_bouquets: 'Bouquets',
+                service_learn_more: 'Learn more',
+                services_empty: 'No services available at the moment.',
+                service_request_quote: 'Request Quote',
+                service_features: 'Features'
+            }
+        };
+
+        function getCurrentLanguage() {
+            return localStorage.getItem('language') || 'el';
+        }
+
+        function t(key) {
+            const lang = getCurrentLanguage();
+            return translations[lang][key] || key;
+        }
+
+        function updatePageLanguage() {
+            const lang = getCurrentLanguage();
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update active language button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                const btnLang = btn.getAttribute('data-lang');
+                if (btnLang === lang) {
+                    btn.classList.add('text-rose-600', 'font-semibold');
+                    btn.classList.remove('text-gray-500');
+                } else {
+                    btn.classList.remove('text-rose-600', 'font-semibold');
+                    btn.classList.add('text-gray-500');
+                }
+            });
+        }
+
+        function setLanguage(lang) {
+            localStorage.setItem('language', lang);
+            updatePageLanguage();
+            renderServices(); // Re-render to update category headings
+        }
+
+        // ========================================
+        // DATA MANAGEMENT
+        // ========================================
+        
+        function getServices() {
+            const data = localStorage.getItem('services');
+            return data ? JSON.parse(data) : [];
+        }
+
+        function initializeMockData() {
+            const existing = getServices();
+            if (existing.length === 0) {
+                const mockServices = [
+                    {
+                        id: "service-1",
+                        created_date: new Date().toISOString(),
+                        updated_date: new Date().toISOString(),
+                        created_by: "admin@example.com",
+                        title: "Νυφική Ανθοδέσμη & Στολισμός Εκκλησίας",
+                        category: "Weddings",
+                        description: "Δημιουργούμε μοναδικές νυφικές ανθοδέσμες και ολοκληρωμένο στολισμό εκκλησίας που αντανακλά το στυλ και την προσωπικότητά σας. Κάθε λεπτομέρεια επιλέγεται με προσοχή για να ταιριάζει με το θέμα του γάμου σας.",
+                        pricing_info: "Από €250 - €800",
+                        features: ["Νυφική ανθοδέσμη premium", "Στολισμός εκκλησίας", "Boutonniere γαμπρού", "Μπουκέτα παρανύμφων", "Συμβουλές styling"],
+                        example_image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80",
+                        order: 0
+                    },
+                    {
+                        id: "service-2",
+                        created_date: new Date().toISOString(),
+                        updated_date: new Date().toISOString(),
+                        created_by: "admin@example.com",
+                        title: "Διακόσμηση Δεξίωσης Γάμου",
+                        category: "Weddings",
+                        description: "Μεταμορφώνουμε τον χώρο της δεξίωσής σας με εντυπωσιακούς ανθοστολισμούς. Από κεντρικά τραπεζιού μέχρι εντυπωσιακές ανθικές εγκαταστάσεις.",
+                        pricing_info: "Από €500 - €2000",
+                        features: ["Κεντρικά τραπεζιού", "Ανθικές αψίδες", "Στολισμός εισόδου", "Backdrop φωτογράφησης", "Φωτιστικά με λουλούδια"],
+                        example_image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&q=80",
+                        order: 1
+                    },
+                    {
+                        id: "service-3",
+                        created_date: new Date().toISOString(),
+                        updated_date: new Date().toISOString(),
+                        created_by: "admin@example.com",
+                        title: "Βάπτιση Αγοριού",
+                        category: "Baptisms",
+                        description: "Μοντέρνοι και κλασικοί στολισμοί για βάπτιση αγοριού. Επιλέγουμε λουλούδια και χρώματα που ταιριάζουν στο θέμα σας, δημιουργώντας μια όμορφη ατμόσφαιρα.",
+                        pricing_info: "Από €150 - €400",
+                        features: ["Στολισμός εκκλησίας", "Λαμπάδα διακοσμημένη", "Κολυμπήθρα", "Στολισμός δεξίωσης", "Μπομπονιέρες"],
+                        example_image: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800&q=80",
+                        order: 0
+                    },
+                    {
+                        id: "service-4",
+                        created_date: new Date().toISOString(),
+                        updated_date: new Date().toISOString(),
+                        created_by: "admin@example.com",
+                        title: "Βάπτιση Κοριτσιού",
+                        category: "Baptisms",
+                        description: "Ρομαντικοί και λεπτοί ανθοστολισμοί για βάπτιση κοριτσιού με παστέλ χρώματα και ονειρεμένες λεπτομέρειες.",
+                        pricing_info: "Από €150 - €450",
+                        features: ["Ρομαντικός στολισμός", "Λαμπάδα με λουλούδια", "Διακόσμηση τραπεζιού", "Ανθικά centerpieces"],
+                        example_image: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=800&q=80",
+                        order: 1
+                    },
+                    {
+                        id: "service-5",
+                        created_date: new Date().toISOString(),
+                        updated_date: new Date().toISOString(),
+                        created_by: "admin@example.com",
+                        title: "Εταιρικές Εκδηλώσεις",
+                        category: "Events",
+                        description: "Επαγγελματικός ανθοστολισμός για εταιρικά events, παρουσιάσεις προϊόντων, και συνέδρια. Δημιουργούμε την κατάλληλη ατμόσφαιρα για την εκδήλωσή σας.",
+                        pricing_info: "Από €300 - €1500",
+                        features: ["Στολισμός stage", "Centerpieces", "Ανθικές συνθέσεις υποδοχής", "Branding με λουλούδια"],
+                        example_image: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&q=80",
+                        order: 0
+                    },
+                    {
+                        id: "service-6",
+                        created_date: new Date().toISOString(),
+                        updated_date: new Date().toISOString(),
+                        created_by: "admin@example.com",
+                        title: "Γενέθλια & Επετείοι",
+                        category: "Events",
+                        description: "Κάντε κάθε γιορτή ξεχωριστή με τους όμορφους ανθοστολισμούς μας για γενέθλια, επετείους και προσωπικές γιορτές.",
+                        pricing_info: "Από €100 - €600",
+                        features: ["Themed decorations", "Balloon & flower combinations", "Table centerpieces", "Dessert table styling"],
+                        example_image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800&q=80",
+                        order: 1
+                    },
+                    {
+                        id: "service-7",
+                        created_date: new Date().toISOString(),
+                        updated_date: new Date().toISOString(),
+                        created_by: "admin@example.com",
+                        title: "Νυφικό Μπουκέτο Premium",
+                        category: "Bouquets",
+                        description: "Εξαιρετικά νυφικά μπουκέτα με εξωτικά και εποχιακά λουλούδια. Κάθε μπουκέτο δημιουργείται ειδικά για εσάς.",
+                        pricing_info: "Από €80 - €250",
+                        features: ["Premium φρέσκα λουλούδια", "Custom design", "Matching boutonniere", "Διατήρηση για ένθυμο"],
+                        example_image: "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=800&q=80",
+                        order: 0
+                    },
+                    {
+                        id: "service-8",
+                        created_date: new Date().toISOString(),
+                        updated_date: new Date().toISOString(),
+                        created_by: "admin@example.com",
+                        title: "Εποχιακά Μπουκέτα",
+                        category: "Bouquets",
+                        description: "Όμορφα μπουκέτα με εποχιακά λουλούδια για κάθε περίσταση - γενέθλια, επετείους, ευχαριστώ, συγχαρητήρια.",
+                        pricing_info: "Από €35 - €120",
+                        features: ["Φρέσκα εποχιακά λουλούδια", "Elegant wrapping", "Personal card", "Same-day delivery"],
+                        example_image: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=800&q=80",
+                        order: 1
+                    }
+                ];
+                
+                localStorage.setItem('services', JSON.stringify(mockServices));
+            }
+        }
+
+        // ========================================
+        // RENDER FUNCTIONS
+        // ========================================
+        
+        function groupServicesByCategory(services) {
+            const grouped = {};
+            services.forEach(service => {
+                if (!grouped[service.category]) {
+                    grouped[service.category] = [];
+                }
+                grouped[service.category].push(service);
+            });
+            return grouped;
+        }
+
+        function renderServices() {
+            const services = getServices();
+            const container = document.getElementById('services-container');
+            const emptyState = document.getElementById('empty-state');
+            
+            if (services.length === 0) {
+                container.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            
+            emptyState.classList.add('hidden');
+            
+            const categories = ['Weddings', 'Baptisms', 'Events', 'Bouquets'];
+            const servicesByCategory = groupServicesByCategory(services);
+            
+            container.innerHTML = categories.map((category, categoryIndex) => {
+                const categoryServices = servicesByCategory[category] || [];
+                
+                if (categoryServices.length === 0) return '';
+                
+                return `
+                    <div class="mb-20 fade-in-up delay-${categoryIndex + 1}00">
+                        <!-- Category Heading -->
+                        <div class="text-center mb-12">
+                            <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-3">
+                                ${t('category_' + category.toLowerCase())}
+                            </h2>
+                            <div class="w-24 h-1 bg-rose-600 mx-auto rounded-full"></div>
+                        </div>
+                        
+                        <!-- Services Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            ${categoryServices.map((service, index) => `
+                                <div class="group cursor-pointer bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow fade-in-up stagger-${(index % 3) + 1}" onclick='openServiceModal(${JSON.stringify(service).replace(/'/g, "&#39;")})'>
+                                    <!-- Image -->
+                                    <div class="relative h-64 overflow-hidden">
+                                        <img 
+                                            src="${service.example_image || 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80'}" 
+                                            alt="${service.title}" 
+                                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                        >
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                        
+                                        <!-- Sparkles Icon -->
+                                        <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                            <i data-lucide="sparkles" class="w-6 h-6 text-rose-300"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Info -->
+                                    <div class="p-6">
+                                        <h3 class="text-2xl font-serif font-semibold text-gray-900 mb-2 group-hover:text-rose-600 transition">
+                                            ${service.title}
+                                        </h3>
+                                        <p class="text-gray-600 leading-relaxed line-clamp-3 mb-4">
+                                            ${service.description}
+                                        </p>
+                                        ${service.pricing_info ? `
+                                            <div class="text-sm text-rose-600 font-medium mb-4">
+                                                ${service.pricing_info}
+                                            </div>
+                                        ` : ''}
+                                        <div class="text-rose-600 font-medium flex items-center space-x-2 group-hover:space-x-3 transition-all">
+                                            <span data-i18n="service_learn_more">${t('service_learn_more')}</span>
+                                            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            // Re-initialize Lucide icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+
+        // ========================================
+        // MODAL FUNCTIONS
+        // ========================================
+        
+        function openServiceModal(service) {
+            // Populate modal
+            document.getElementById('modal-title').textContent = service.title;
+            document.getElementById('modal-category').textContent = t('category_' + service.category.toLowerCase());
+            document.getElementById('modal-description').textContent = service.description;
+            
+            // Image
+            const imageContainer = document.getElementById('modal-image-container');
+            if (service.example_image) {
+                imageContainer.innerHTML = `
+                    <img src="${service.example_image}" alt="${service.title}" class="w-full h-64 object-cover rounded-xl">
+                `;
+            } else {
+                imageContainer.innerHTML = '';
+            }
+            
+            // Pricing
+            const pricingContainer = document.getElementById('modal-pricing-container');
+            if (service.pricing_info) {
+                pricingContainer.innerHTML = `
+                    <div class="bg-rose-50 rounded-lg p-4">
+                        <h3 class="font-semibold text-gray-900 mb-1">Τιμολόγηση</h3>
+                        <p class="text-rose-600 font-medium">${service.pricing_info}</p>
+                    </div>
+                `;
+            } else {
+                pricingContainer.innerHTML = '';
+            }
+            
+            // Features
+            const featuresContainer = document.getElementById('modal-features-container');
+            if (service.features && service.features.length > 0) {
+                featuresContainer.innerHTML = `
+                    <div>
+                        <h3 class="font-semibold text-gray-900 mb-3" data-i18n="service_features">${t('service_features')}</h3>
+                        <ul class="space-y-2">
+                            ${service.features.map(feature => `
+                                <li class="flex items-start space-x-2">
+                                    <i data-lucide="check" class="w-5 h-5 text-rose-600 flex-shrink-0 mt-0.5"></i>
+                                    <span class="text-gray-700">${feature}</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                `;
+            } else {
+                featuresContainer.innerHTML = '';
+            }
+            
+            // Request Quote button
+            const quoteBtn = document.getElementById('request-quote-btn');
+            quoteBtn.href = `contact-public.html?service=${encodeURIComponent(service.title)}`;
+            
+            // Show modal
+            const modal = document.getElementById('service-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            
+            // Re-initialize icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+
+        function closeModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            
+            const modal = document.getElementById('service-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Make functions globally accessible
+        window.openServiceModal = openServiceModal;
+        window.closeModal = closeModal;
+
+        // Close on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // ========================================
+        // EVENT LISTENERS
+        // ========================================
+        
+        // Language switcher
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                setLanguage(this.getAttribute('data-lang'));
+            });
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // ========================================
+        // INITIALIZE
+        // ========================================
+        
+        window.addEventListener('DOMContentLoaded', function() {
+            initializeMockData();
+            updatePageLanguage();
+            renderServices();
+            
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+</html>
+
+<!--
+SUMMARY & INTEGRATION NOTES:
+
+This is the public Services page for Rose Flower Shop.
+
+DATA INTEGRATION:
+- Reads from localStorage key 'services' (shared with admin services-manage.html)
+- When admin adds/edits/deletes services, this page automatically reflects changes on next load
+- Mock data includes 8 services (2 per category) seeded on first visit if localStorage is empty
+
+FEATURES IMPLEMENTED:
+- Services grouped by category (Weddings, Baptisms, Events, Bouquets)
+- Each category has heading with decorative underline
+- Service cards with:
+  - Image with hover zoom effect
+  - Gradient overlay on hover
+  - Sparkles icon (Lucide) appearing on hover
+  - Title, description (3-line clamp), pricing
+  - "Learn More" link with animated arrow
+- Modal dialog showing:
+  - Full service details (image, title, category, description, pricing, features list)
+  - "Request Quote" button linking to contact-public.html?service=SERVICE_TITLE
+  - Close via × button, clicking outside, or Esc key
+- Responsive grid (1/2/3 columns)
+- Staggered fade-in animations
+- Language switching (Greek/English)
+- Mobile responsive navbar
+
+ASSUMPTIONS:
+- Services have example_image URLs (Unsplash)
+- Category values match exactly: "Weddings", "Baptisms", "Events", "Bouquets"
+- Features array contains Greek text strings
+-->
