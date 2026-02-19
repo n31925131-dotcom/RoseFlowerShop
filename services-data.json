@@ -87,5 +87,22 @@
     ],
     "example_image": "https://res.cloudinary.com/dopmj1ksm/image/upload/v1771506611/ppv3uoydm8j0yt3kzlpd.jpg",
     "order": 1
+  },
+  {
+    "id": "srv_1771506655812_iilomu4ua",
+    "created_date": "2026-02-19T13:10:55.812Z",
+    "updated_date": "2026-02-19T13:10:55.812Z",
+    "title": "Γενέθλια & Επετείοι",
+    "category": "Events",
+    "description": "Κάντε κάθε γιορτή ξεχωριστή με τους όμορφους ανθοστολισμούς μας για γενέθλια, επετείους και προσωπικές γιορτές.\n\n",
+    "pricing_info": "Από €100 - €600",
+    "features": [
+      "Themed decorations",
+      "Balloon & flower combinations",
+      "Table centerpieces",
+      "Dessert table styling"
+    ],
+    "example_image": "https://res.cloudinary.com/dopmj1ksm/image/upload/v1771506647/gnu0pxeop0poev48drfw.jpg",
+    "order": 2
   }
 ]
