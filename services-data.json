@@ -104,5 +104,22 @@
     ],
     "example_image": "https://res.cloudinary.com/dopmj1ksm/image/upload/v1771506647/gnu0pxeop0poev48drfw.jpg",
     "order": 2
+  },
+  {
+    "id": "srv_1771506748820_xpkuoo827",
+    "created_date": "2026-02-19T13:12:28.820Z",
+    "updated_date": "2026-02-19T13:12:28.820Z",
+    "title": "Νυφικό Μπουκέτο Premium",
+    "category": "Bouquets",
+    "description": "Εξαιρετικά νυφικά μπουκέτα με εξωτικά και εποχιακά λουλούδια. Κάθε μπουκέτο δημιουργείται ειδικά για εσάς.\n\n",
+    "pricing_info": "Από €80 - €250",
+    "features": [
+      "Premium φρέσκα λουλούδια",
+      "Custom design",
+      "Matching boutonniere",
+      "Διατήρηση για ένθυμο"
+    ],
+    "example_image": "https://res.cloudinary.com/dopmj1ksm/image/upload/v1771506738/wz7a5mtmm9x2dydrt8c5.png",
+    "order": 1
   }
 ]
