@@ -34,5 +34,23 @@
     ],
     "example_image": "https://res.cloudinary.com/dopmj1ksm/image/upload/v1771505181/orqywxkztwkeyp4lgvcx.jpg",
     "order": 2
+  },
+  {
+    "id": "srv_1771506076395_74w3sqn08",
+    "created_date": "2026-02-19T13:01:16.395Z",
+    "updated_date": "2026-02-19T13:01:16.395Z",
+    "title": "Βάπτιση Κοριτσιού",
+    "category": "Baptisms",
+    "description": "Ρομαντικοί και λεπτοί ανθοστολισμοί για βάπτιση κοριτσιού με παστέλ χρώματα και ονειρεμένες λεπτομέρειες.\n\n",
+    "pricing_info": "Από €150 - €450",
+    "features": [
+      "Ρομαντικός στολισμός",
+      "Λαμπάδα με λουλούδια",
+      "Διακόσμηση τραπεζιού",
+      "Ανθικά centerpieces",
+      "Ζητήστε Προσφορά"
+    ],
+    "example_image": "https://res.cloudinary.com/dopmj1ksm/image/upload/v1771506071/v3afeo2hfqqx70zaxwtd.jpg",
+    "order": 1
   }
 ]
